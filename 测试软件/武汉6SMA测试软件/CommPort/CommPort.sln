@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommPort", "CommPort.csproj", "{FA0D6D1C-EE6D-4701-A951-8FCCA1582D93}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA0D6D1C-EE6D-4701-A951-8FCCA1582D93}.Debug|x86.ActiveCfg = Debug|x86
+		{FA0D6D1C-EE6D-4701-A951-8FCCA1582D93}.Debug|x86.Build.0 = Debug|x86
+		{FA0D6D1C-EE6D-4701-A951-8FCCA1582D93}.Release|x86.ActiveCfg = Release|x86
+		{FA0D6D1C-EE6D-4701-A951-8FCCA1582D93}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

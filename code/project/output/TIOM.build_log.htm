@@ -1,0 +1,114 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: ff AutoBVT, Microsoft, LIC=65IQD-8MTC2-8SSYU-SYV8G-KJDCC-506J5
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Standard  Version: 5.14.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARMCM3.DLL V5.14.0.0
+Dialog DLL:      DCM.DLL V1.13.1.0
+Target DLL:      Segger\JL2CM3.dll V2.99.13.0
+Dialog DLL:      TCM.DLL V1.14.4.0
+ 
+<h2>Project:</h2>
+F:\ARMPoject\SMA\code\project\SMA.uvprojx
+Project File Date:  07/18/2017
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+compiling main.c...
+compiling stm32f10x_it.c...
+compiling public.c...
+compiling variables_def.c...
+compiling stm32f10x_spi.c...
+compiling core_cm3.c...
+compiling system_stm32f10x.c...
+assembling startup_stm32f10x_hd.s...
+compiling stm32f10x_gpio.c...
+compiling stm32f10x_rcc.c...
+compiling stm32f10x_usart.c...
+compiling misc.c...
+compiling stm32f10x_tim.c...
+compiling systick.c...
+compiling beep.c...
+compiling usart.c...
+compiling key.c...
+compiling time.c...
+compiling spi.c...
+compiling flash.c...
+compiling RC522.c...
+APP\RFID\RC522.c(56): warning:  #68-D: integer conversion resulted in a change of sign
+     {   status = MI_ERR;  
+APP\RFID\RC522.c(93): warning:  #68-D: integer conversion resulted in a change of sign
+           {   status = MI_ERR;    }
+APP\RFID\RC522.c(129): warning:  #68-D: integer conversion resulted in a change of sign
+      {   status = MI_ERR;    }
+APP\RFID\RC522.c(161): warning:  #68-D: integer conversion resulted in a change of sign
+      {   status = MI_ERR;   }
+APP\RFID\RC522.c(190): warning:  #68-D: integer conversion resulted in a change of sign
+      {   status = MI_ERR;   }
+APP\RFID\RC522.c(214): warning:  #68-D: integer conversion resulted in a change of sign
+      {   status = MI_ERR;   }
+APP\RFID\RC522.c(225): warning:  #68-D: integer conversion resulted in a change of sign
+          {   status = MI_ERR;   }
+APP\RFID\RC522.c(253): warning:  #68-D: integer conversion resulted in a change of sign
+      {   status = MI_ERR;   }
+APP\RFID\RC522.c(263): warning:  #514-D: pointless comparison of unsigned integer with a negative constant
+          if (status != MI_ERR)
+APP\RFID\RC522.c(276): warning:  #68-D: integer conversion resulted in a change of sign
+          {   status = MI_ERR;   }
+APP\RFID\RC522.c(300): warning:  #68-D: integer conversion resulted in a change of sign
+      {   status = MI_ERR;   }
+APP\RFID\RC522.c(311): warning:  #514-D: pointless comparison of unsigned integer with a negative constant
+          if (status != MI_ERR)
+APP\RFID\RC522.c(316): warning:  #68-D: integer conversion resulted in a change of sign
+      {    return MI_ERR;   }
+APP\RFID\RC522.c(326): warning:  #68-D: integer conversion resulted in a change of sign
+      {   status = MI_ERR;   }
+APP\RFID\RC522.c(338): warning:  #550-D: variable "status" was set but never used
+      char status;
+APP\RFID\RC522.c(383): warning:  #223-D: function "delay_us" declared implicitly
+                delay_us(10);                  
+APP\RFID\RC522.c(427): warning:  #223-D: function "delay_us" declared implicitly
+                 delay_us(10);    //STM32需要多加的延时时间。51的不需要加
+APP\RFID\RC522.c(436): warning:  #223-D: function "delay_us" declared implicitly
+                 delay_us(10);    //STM32需要多加的延时时间。51的不需要加
+APP\RFID\RC522.c(463): warning:  #223-D: function "delay_us" declared implicitly
+                delay_us(10);      //STM32需要多加的延时时间。51的不需要加
+APP\RFID\RC522.c(472): warning:  #223-D: function "delay_us" declared implicitly
+                delay_us(10);    //STM32需要多加的延时时间。51的不需要加
+APP\RFID\RC522.c(516): warning:  #68-D: integer conversion resulted in a change of sign
+      char status = MI_ERR;
+APP\RFID\RC522.c(564): warning:  #68-D: integer conversion resulted in a change of sign
+               {   status = MI_NOTAGERR;   }
+APP\RFID\RC522.c(582): warning:  #68-D: integer conversion resulted in a change of sign
+           {   status = MI_ERR;   }
+APP\RFID\RC522.c: 23 warnings, 0 errors
+compiling sys.c...
+compiling delay.c...
+APP\delay\delay.c(6): warning:  #550-D: variable "fac_ms" was set but never used
+  static u16 fac_ms=0;                                                  //ms延时倍乘数,在ucos下,代表每个节拍的ms数
+APP\delay\delay.c: 1 warning, 0 errors
+linking...
+Program Size: Code=15076 RO-data=336 RW-data=164 ZI-data=2164  
+FromELF: creating hex file...
+".\output\TIOM.axf" - 0 Error(s), 24 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  F:\ARMPoject\SMA\code\project\RTE
+  C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0
+
+<h2>Collection of Component Files used:</h2>
+</pre>
+</body>
+</html>
