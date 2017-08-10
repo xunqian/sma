@@ -55,7 +55,13 @@
 #include "variables_def.h"
 #include "reg.h"
 #include "string.h"
-//#include "rfid.h"
+#include "RC522.h"
+#include "iwdg.h"
+#include "flash.h"
+const u8 TEXT_Buffer[10]={0x01,0x02,0x01,0x02,0x01,0x02,0x01,0x02,0x01,0x02};
+	#define SIZE (10)
+	uint8_t buff[10];
+
 void read_sensorstatus(void);
 
 /*******************************************************************************
@@ -192,6 +198,7 @@ void LED_Display(uint8 number)
 		Write_LED(0x8e);
 		break;
 	default:
+		Write_LED(0xff);
 		break;
    }			
 }
@@ -310,8 +317,9 @@ static void vGPIOInit(void)
 
     OutGPA = (u16)(0x0003);//0000 0000 0000 0011
     OutGPB = (u16)(0x0000);//0000 0000 0000 0000   
-    OutGPC = (u16)(0xc00f);//1100 0000 0000 1111	
-    OutGPD = (u16)(0x0760);//0000 0000 0000 0001
+    OutGPC = (u16)(0xc00f);//1100 0000 0000 1111
+    //传感器电源初始化为上电状态
+    OutGPD = (u16)(0x0100);//0000 0000 0000 0000
 	OutGPE = (u16)(0x0000);//0000 0000 0000 0000
 	GPIO_Write(GPIOA, OutGPA);
     GPIO_Write(GPIOB, OutGPB);
@@ -586,13 +594,13 @@ uint8 Check_LRC(uint8 *ptr, uint8 len)
 /*   NULL                                                                                                                                           */
 /*                                                                                                                                                      */
 /*****************************************************************************/
- void KEEP_SOLE_STOP(void)
- 	{
-		MOTOR_1F1_RESET;
-		MOTOR_1F2_RESET;
- 	}
+void KEEP_SOLE_STOP(void)
+{
+	MOTOR_1F1_RESET;
+	MOTOR_1F2_RESET;
+}
 void KEEP_SOLE_A(void)
- {
+{
  	MOTOR_1F1_RESET;
 	MOTOR_1F2_SET;
 	drop_tic_time = 50;//1秒
@@ -603,24 +611,19 @@ void KEEP_SOLE_A(void)
 			 break;
 	 }
 	 KEEP_SOLE_STOP();		
- }
- void KEEP_SOLE_B(void)
- 	{
-		MOTOR_1F1_SET;
-		MOTOR_1F2_RESET;
-		drop_tic_time = 50;//1秒
-		 while(drop_tic_time)
-		 {
-			 read_sensorstatus();
-			 if(sens.SENSORS_STATUS.checkticks8 ==0x00)
-				 break;
-		 }
-		 KEEP_SOLE_STOP();
- 	}
-
-
-void motor_rotation (void)
+}
+void KEEP_SOLE_B(void)
 {
+	MOTOR_1F1_SET;
+	MOTOR_1F2_RESET;
+	drop_tic_time = 50;//1秒
+ 	while(drop_tic_time)
+	 {
+		 read_sensorstatus();
+		 if(sens.SENSORS_STATUS.checkticks8 ==0x00)
+			 break;
+	 }
+ 	KEEP_SOLE_STOP();
 }
  /*****************************************************************************/
  /* Function Description:																													   */
@@ -643,10 +646,10 @@ void motor_rotation (void)
  /*****************************************************************************/
  
  uint8 GetBit(uint8 b, uint8 index)//将第index位设为1
-		{ 
-			 b |=(1 << index);
-			 return b;			 
-		}
+{ 
+	 b |=(1 << index);
+	 return b;			 
+}
  /*****************************************************************************/
  /* Function Description:																													   */
  /*****************************************************************************/
@@ -669,11 +672,10 @@ void motor_rotation (void)
  
  
  uint8 SetBit(uint8 b, uint8 index) //将第index位设为0
-		{
-			 b&= ~(1 << index);//置0
-			 return b;
-		}
-
+{
+	 b&= ~(1 << index);//置0
+	 return b;
+}
 /*****************************************************************************/
 /* Function Description:                                                                                                                      */
 /*****************************************************************************/
@@ -768,7 +770,7 @@ void cmd_reseive(RETURN_CODE *cmd)
 void read_sensorstatus(void)
 {	
 	if(wdt_reseten == 1)
-		//WDR();
+	IWDG_ReloadCounter();	   //1.28s
 	sens_last = sens;	//SENSORS联合体变量
 	sens.status[0] = GPIO_ReadInputDataBit(SENS1_PORT, SENS1_BIT_NUM);
 	sens.status[1] = GPIO_ReadInputDataBit(SENS2_PORT, SENS2_BIT_NUM);
@@ -801,7 +803,7 @@ void read_sensorstatus(void)
 	{
 		sole_openleave_over_time=200;//电磁铁打开后离开传感器超时时间启动				
 	}	
-    if(sens.SENSORS_STATUS.checkticks6 ==0x00) 
+    if((sens.SENSORS_STATUS.checkticks6 ==0x00)&&sens_selfcheck==0)
     {		
 		SOLEA_OFF();	//关闭上方电磁铁		
     	detection=INEXISTENCE;//清除检测区标志
@@ -911,61 +913,114 @@ void model_status_anto(RETURN_CODE *re_comm)
 /*                                                                                                                                                      */
 /*****************************************************************************/
 void sensor_self_check(RETURN_CODE *re_code)
-{
-    //uint8 i;
-	sole_open_over_time=5000;
-	SOLEA_ON();
-	SOLEB_ON();
-	sole_openleave_over_time=1000;//电磁铁打开后离开传感器超时时间启动
-	delay(200);
-    read_sensorstatus();
-	re_code->MESSAGE.info[1]=0;
-	//SENSOR_LED_OFF;
-	 if(sens.SENSORS_STATUS.checkticks9 == sens_last.SENSORS_STATUS.checkticks9)
-    {
-        re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 2);
-	    re_code->MESSAGE.err_code = sens_err; 
-		//SENSOR_LED_ON;
-    }
-    if(sens.SENSORS_STATUS.checkticks11 == sens_last.SENSORS_STATUS.checkticks11)
-    {
-        re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 3);
-	    re_code->MESSAGE.err_code = sens_err; 
-		//SENSOR_LED_ON;
-    }    
-	delay(20);
-	SOLEA_OFF();
-	SOLEB_OFF();      
-    read_sensorstatus();
-    SensorP_OFF;
-    delay(200);
+{	
+	sens_selfcheck=1;  //传感器自检标志
+	//初始化关闭八段码故障显示，清除上传故障码
+	LED_Display(0x00);
+	Write_LED(0x00);
+	re_code->MESSAGE.info[1] =0x00;
+	//所有传感器发射端断电为0；上电无遮挡为1；
+	KEEP_SOLE_A();
+	SensorP_OFF;	
+    delay_ms(50);
     read_sensorstatus();     
     SensorP_ON; 
-	delay(20);  
-    if(sens.SENSORS_STATUS.checkticks1 == sens_last.SENSORS_STATUS.checkticks1)
-    	{
-	    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 0);
-	     	re_code->MESSAGE.err_code = sens_err;
-		//	SENSOR_LED_ON;
-    	}
-    else if(sens.SENSORS_STATUS.checkticks2 == sens_last.SENSORS_STATUS.checkticks2)
-       {
-	    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 1);
-	     	re_code->MESSAGE.err_code = sens_err;
-		//	SENSOR_LED_ON;
-    	}    
-	else if(sens.SENSORS_STATUS.checkticks3 == sens_last.SENSORS_STATUS.checkticks3)
-		{
-			if(model==close_model)
-				{
-					re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 4);
-	     			re_code->MESSAGE.err_code = sens_err;
-			//		SENSOR_LED_ON;
-				}
-		}
-		
-  read_sensorstatus(); 
+	delay_ms(50);  
+	read_sensorstatus();
+    if((sens.SENSORS_STATUS.checkticks1 ==1)&&(sens_last.SENSORS_STATUS.checkticks1==0))
+    {
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 0);
+    }
+	else
+	{
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 0);
+     	re_code->MESSAGE.err_code = sens_err;
+		LED_Display(0x11);
+	}
+	if((sens.SENSORS_STATUS.checkticks3 ==1)&&(sens_last.SENSORS_STATUS.checkticks3==0))
+    {
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 3);
+    }
+	else
+	{
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 3);
+     	re_code->MESSAGE.err_code = sens_err;
+		LED_Display(0x13);
+	}
+	if((sens.SENSORS_STATUS.checkticks4 ==1)&&(sens_last.SENSORS_STATUS.checkticks4==0))
+    {
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 4);
+    }
+	else
+	{
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 4);
+     	re_code->MESSAGE.err_code = sens_err;
+		LED_Display(0x14);
+	}
+	if((sens.SENSORS_STATUS.checkticks5 ==1)&&(sens_last.SENSORS_STATUS.checkticks5==0))
+    {
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 5);
+    }
+	else
+	{
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 5);
+     	re_code->MESSAGE.err_code = sens_err;
+		LED_Display(0x15);
+	}
+	if((sens.SENSORS_STATUS.checkticks6 ==1)&&(sens_last.SENSORS_STATUS.checkticks6==0))
+    {
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 6);
+    }
+	else
+	{
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 6);
+     	re_code->MESSAGE.err_code = sens_err;
+		LED_Display(0x16);
+	}
+	if((sens.SENSORS_STATUS.checkticks8 ==1)&&(sens_last.SENSORS_STATUS.checkticks8==0))
+    {
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 8);
+    }
+	else
+	{
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 8);
+     	re_code->MESSAGE.err_code = sens_err;
+		LED_Display(0x18);
+	}	
+	sole_open_over_time=200;
+	sole_openleave_over_time=200;
+	SOLEA_ON();
+	KEEP_SOLE_B();
+	SensorP_OFF;	
+    delay_ms(50);
+    read_sensorstatus();     
+    SensorP_ON; 
+	delay_ms(50);  
+	read_sensorstatus();
+	if((sens.SENSORS_STATUS.checkticks2 ==1)&&(sens_last.SENSORS_STATUS.checkticks2==0))
+    {
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 2);
+    }
+	else
+	{
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 2);
+     	re_code->MESSAGE.err_code = sens_err;
+		LED_Display(0x12);
+	} 
+	if((sens.SENSORS_STATUS.checkticks7 ==1)&&(sens_last.SENSORS_STATUS.checkticks7==0))
+    {
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 7);
+    }
+	else
+	{
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 7);
+     	re_code->MESSAGE.err_code = sens_err;
+		LED_Display(0x17);
+	}	
+	SOLEA_OFF();
+	KEEP_SOLE_A();    
   antenna = INEXISTENCE;    //清空天线区标志
+  sens_selfcheck=0;  //传感器自检标志
 }
 
  
@@ -1048,8 +1103,7 @@ void module_init(RETURN_CODE *re_comm)
 	read_sensorstatus();
    	SOLEB_ON();
 	SOLEA_ON();
-	delay(1000000);
-	//if((sens.SENSORS_STATUS.checkticks6!=0)&&(sens.SENSORS_STATUS.checkticks4!=0))
+	delay(1000000);	
 	SOLEB_OFF();
 	SOLEA_OFF();
 	SOLEC_ON();
@@ -1071,10 +1125,215 @@ void module_init(RETURN_CODE *re_comm)
 		KEEP_SOLE_A();
 	}
 	check_modelstatus(re_comm);
+	sensor_self_check(re_comm); 
 	detection=INEXISTENCE;	  //清空检测区标志
 	antenna = INEXISTENCE;    //清空天线区标志	
     LED_OFF;//退币口指示灯灭   
-}  
+} 
+/*****************************************************************************/
+/* Function Description:                                                                                                                      */
+/*****************************************************************************/
+//读取票箱电子芯片块数据
+//参数box_no 票箱编号取值范围为:2,3,4
+//参数block_no块地址取值范围为:8,9,10\12,13,14\等，详见S50等IC卡手册
+//参数*pDATA返回的电子芯片块数据指针
+/*****************************************************************************/
+/* Parameters:                                                                                                                                  */
+/*****************************************************************************/
+/*                                                                                                                                                     */
+/*                                                                                                                                           */
+/*                                                                                                                                                     */
+/*****************************************************************************/
+/* Return Values:          是否成功                                                                                             */
+/*****************************************************************************/
+/*                                                                                                                                                      */
+/*   0x00:OK  其他错误                                                                                                                                           */
+/*                                                                                                                                                      */
+/*****************************************************************************/
+
+uint8 ReadRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
+{
+	unsigned char status=0xfe;
+	unsigned char g_ucTempbuf[30];	
+	unsigned char DefaultKey[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; 
+	status = PcdRequest(PICC_REQALL, g_ucTempbuf);//寻卡
+	if (status != MI_OK)
+	{
+		//寻卡超时时间设为0.5s
+		g_cbWaitRespDly=25;
+		while(g_cbWaitRespDly!=0)
+		{
+			PcdReset();
+			PcdAntennaOff(); 
+			PcdAntennaOn(); 
+			status = PcdRequest(PICC_REQALL, g_ucTempbuf);//寻卡
+			if(status==MI_OK)
+				break;
+		}		
+	}
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25;	
+	do{
+			status = PcdAnticoll(g_ucTempbuf);//防碰撞
+			if(status == MI_OK)
+				break;
+		}while(g_cbWaitRespDly!=0);		 
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25;	
+	do{
+			status = PcdSelect(g_ucTempbuf);//选定卡片
+			if(status == MI_OK)
+				break;
+		}while(g_cbWaitRespDly!=0);	
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25;	
+	do{
+			//验证卡片密码
+			status = PcdAuthState(PICC_AUTHENT1A, block_no, DefaultKey, g_ucTempbuf);
+			if(status == MI_OK)
+				break;
+		}while(g_cbWaitRespDly!=0);
+	g_cbWaitRespDly=50;	
+	do{			
+			status = PcdRead(block_no, pDATA);//读块
+			if(status == MI_OK)
+				break;
+		}while(g_cbWaitRespDly!=0); 
+
+	return status;
+}
+/*****************************************************************************/
+/* Function Description:                                                                                                                      */
+/*****************************************************************************/
+//写入票箱电子芯片块数据
+//参数box_no 票箱编号取值范围为:2,3,4
+//参数block_no块地址取值范围为:8,9,10\12,13,14\等，详见S50等IC卡手册
+//参数*pDATA写入电子芯片块数据指针
+/*****************************************************************************/
+/* Parameters:                                                                                                                                  */
+/*****************************************************************************/
+/*                                                                                                                                                     */
+/*                                                                                                                                           */
+/*                                                                                                                                                     */
+/*****************************************************************************/
+/* Return Values:          是否成功                                                                                             */
+/*****************************************************************************/
+/*                                                                                                                                                      */
+/*   0x00:OK  其他错误                                                                                                                                           */
+/*                                                                                                                                                      */
+/*****************************************************************************/
+
+uint8 WriteRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
+
+
+{
+	unsigned char status=0xfe;
+	unsigned char g_ucTempbuf[30];	
+	unsigned char DefaultKey[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; 
+	status = PcdRequest(PICC_REQALL, g_ucTempbuf);//寻卡
+	if (status != MI_OK)
+	{
+		//寻卡超时时间设为0.5s
+		g_cbWaitRespDly=25;
+		while(g_cbWaitRespDly!=0)
+		{
+			PcdReset();
+			PcdAntennaOff(); 
+			PcdAntennaOn(); 
+			status = PcdRequest(PICC_REQALL, g_ucTempbuf);//寻卡
+			if(status==MI_OK)
+				break;
+		}		
+	}
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25;	
+	do{
+			status = PcdAnticoll(g_ucTempbuf);//防碰撞
+			if(status == MI_OK)
+				break;
+		}while(g_cbWaitRespDly!=0);		 
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25;	
+	do{
+			status = PcdSelect(g_ucTempbuf);//选定卡片
+			if(status == MI_OK)
+				break;
+		}while(g_cbWaitRespDly!=0);	
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25;	
+	do{
+			//验证卡片密码
+			status = PcdAuthState(PICC_AUTHENT1A, block_no, DefaultKey, g_ucTempbuf);
+			if(status == MI_OK)
+				break;
+		}while(g_cbWaitRespDly!=0);		 
+	//超时时间设为1s
+	g_cbWaitRespDly=50;	
+	do{
+			status = PcdWrite(block_no,pDATA);//写块
+			if(status == MI_OK)
+				break;
+		}while(g_cbWaitRespDly!=0); 
+	return status;
+}
+/*****************************************************************************/
+/* Function Description:                                                                                                                      */
+/*****************************************************************************/
+//读取票箱电子芯片物理编号
+//参数box_no 票箱编号取值范围为:2,3,4
+//参数*pDATA返回的电子芯片块数据指针
+/*****************************************************************************/
+/* Parameters:                                                                                                                                  */
+/*****************************************************************************/
+/*                                                                                                                                                     */
+/*                                                                                                                                           */
+/*                                                                                                                                                     */
+/*****************************************************************************/
+/* Return Values:          是否成功                                                                                             */
+/*****************************************************************************/
+/*                                                                                                                                                      */
+/*   0x00:OK  其他错误                                                                                                                                           */
+/*                                                                                                                                                      */
+/*****************************************************************************/
+
+uint8 ReadRFID_Serial_Number(uint8 box_no,uint8 *pDATA)
+{
+	unsigned char status=0xfe;
+	//unsigned char g_ucTempbuf[30];	 
+	status = PcdRequest(PICC_REQALL,pDATA);//寻卡
+	if (status != MI_OK)
+	{
+		//寻卡超时时间设为0.5s
+		g_cbWaitRespDly=25;
+		while(g_cbWaitRespDly!=0)
+		{
+			PcdReset();
+			PcdAntennaOff(); 
+			PcdAntennaOn(); 
+			status = PcdRequest(PICC_REQALL,pDATA);//寻卡
+			if(status==MI_OK)
+				break;
+		}		
+	}
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25; 
+	do{
+			status = PcdAnticoll(pDATA);//防碰撞
+			if(status == MI_OK)
+				break;
+
+		}while(g_cbWaitRespDly!=0); 	 
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25; 
+	do{
+			status = PcdSelect(pDATA);//选定卡片
+			if(status == MI_OK)
+				break;
+
+		}while(g_cbWaitRespDly!=0);
+	return status;
+}
+
 /*****************************************************************************/
 /* Function Description:                                                                                                                      */
 /*****************************************************************************/
@@ -1308,7 +1567,7 @@ void check_command(void)//检查命令
 					else if(3==inbox[1])
 						SoleB_Open(DROP_T2);	
 					if(drop_tic_time==0)
-						antenna=0;					
+						antenna=INEXISTENCE;					
 			   	}
 			    else
 			   		re_code.MESSAGE.err_code =no_card_at_RW_area;					
@@ -1387,13 +1646,13 @@ void check_command(void)//检查命令
                 re_code.MESSAGE.act_code = inbox[0];
                 if(3==inbox[1]||4==inbox[1])
                {      
-                       //re_code.MESSAGE.err_code = ReadRFIDBLOCK(inbox[1],inbox[2],re_code.MESSAGE.info);
+                      re_code.MESSAGE.err_code = ReadRFIDBLOCK(inbox[1],inbox[2],re_code.MESSAGE.info);
                       if(re_code.MESSAGE.err_code == com_ok)
                        {
                             re_code.MESSAGE.result = 's';
                            normal_start = 1;
                         }
-                     else
+                      else
                       {
                            re_code.MESSAGE.result = 'e';
                           normal_start = 2;
@@ -1415,7 +1674,7 @@ void check_command(void)//检查命令
                 if(3==inbox[1]||4==inbox[1])
                     {
                     
-                        //re_code.MESSAGE.err_code = WriteRFIDBLOCK(inbox[1],inbox[2],&inbox[3]);
+                        re_code.MESSAGE.err_code = WriteRFIDBLOCK(inbox[1],inbox[2],&inbox[3]);
                         if(re_code.MESSAGE.err_code == com_ok)
                           {
                                re_code.MESSAGE.result = 's';
@@ -1443,7 +1702,7 @@ void check_command(void)//检查命令
                 re_code.MESSAGE.act_code = inbox[0];
 		         if(3==inbox[1]||4==inbox[1])
                  {
-                   // re_code.MESSAGE.err_code = ReadRFID_Serial_Number(inbox[1],re_code.MESSAGE.info);                
+                   re_code.MESSAGE.err_code = ReadRFID_Serial_Number(inbox[1],re_code.MESSAGE.info);                
        
                    if(re_code.MESSAGE.err_code == com_ok)
                      {
@@ -1570,7 +1829,35 @@ void check_command(void)//检查命令
         receive_ok = 0;
 	}
   
-} 
+}
+/*****************************************************************************/
+/* Function Description:                                                                                               */
+/*****************************************************************************/
+//初始化RFID读写器
+/*****************************************************************************/
+/* Parameters:                                                                                                            */
+/*****************************************************************************/
+/*                                                                                                                              */
+/*                                                                                                                              */
+/*                                                                                                                            */
+/*****************************************************************************/
+/* Return Values:                                                                                                      */
+/*****************************************************************************/
+/*                                                                                                                              */
+/*  无                                                                                                                      */
+/*                                                                                                                              */
+/*****************************************************************************/
+
+void RFID_INIT(void)
+{
+	RC522_Init();
+	PcdReset();
+ 	PcdAntennaOff(); 
+	delay_ms(10);
+ 	PcdAntennaOn();
+	delay_ms(10);
+}
+
 /****************************************************************************
 * Function Name  : main
 * Description    : Main program.
@@ -1580,16 +1867,26 @@ void check_command(void)//检查命令
 ****************************************************************************/
 int main()
 {	
-	static RETURN_CODE re_code;
+	static RETURN_CODE re_code;	
 	normal_start = 1;
+	wdt_reseten = 1;
+	antenna=INEXISTENCE;//清空天线区标志
+	receive_limits=prohibit; // 默认模块控制模块为禁止接受模式
+	LED_control_flag=0;//默认退币口指示灯为模块控制
+	
 	prvSetupHardware();	
+	//iwdg_init();   //独立看门狗初始化
 	time_init();  //定时器3初始化	
 	usart_all_init();
 	module_init(&re_code);
+	RFID_INIT();
+	FLASH_Init();	
+    FLASH_WriteData((u8*)TEXT_Buffer, 0, SIZE);
+	FLASH_ReadData(buff, 0, SIZE);
 	while(1)
-	{
+	{		
 		read_sensorstatus();		
-		check_command();
+		check_command();	
 	}
 }
 

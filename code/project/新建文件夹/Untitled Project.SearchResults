@@ -1,21 +1,3 @@
----- USART_SendData Matches (20 in 4 files) ----
-Main.c (f:\armpoject\sma\code\project\user):	USART_SendData(USART1,WXDLE);
-Main.c (f:\armpoject\sma\code\project\user):	USART_SendData(USART1,cmd);    
-Main.c (f:\armpoject\sma\code\project\user):	USART_SendData(USART1,WXDLE);
-Main.c (f:\armpoject\sma\code\project\user):	USART_SendData(USART1,WXSTX);    
-Main.c (f:\armpoject\sma\code\project\user):            USART_SendData(USART1,WXDLE);
-Main.c (f:\armpoject\sma\code\project\user):		USART_SendData(USART1,*p);                 
-Main.c (f:\armpoject\sma\code\project\user):    USART_SendData(USART1,WXDLE);
-Main.c (f:\armpoject\sma\code\project\user):    USART_SendData(USART1,WXSTX);
-Main.c (f:\armpoject\sma\code\project\user):	USART_SendData(USART1,temp);
-Stm32f10x_it.c (f:\armpoject\sma\code\project\user):		USART_SendData(USART1,k);//通过外设USARTx发送单个数据
-Stm32f10x_it.c (f:\armpoject\sma\code\project\user):		USART_SendData(USART3,k);//通过外设USARTx发送单个数据
-Stm32f10x_it.c (f:\armpoject\sma\code\project\user):		USART_SendData(USART3,k);//通过外设USARTx发送单个数据
-Stm32f10x_it.c (f:\armpoject\sma\code\project\user):		USART_SendData(USART3,k);//通过外设USARTx发送单个数据
-Stm32f10x_it.c (f:\armpoject\sma\code\project\user):		USART_SendData(USART3,k);//通过外设USARTx发送单个数据
-Stm32f10x_usart.c (f:\armpoject\sma\code\project\libraries\stm32f10x_stdperiph_driver\src):void USART_SendData(USART_TypeDef* USARTx, uint16_t Data)
-Stm32f10x_usart.c (f:\armpoject\sma\code\project\libraries\stm32f10x_stdperiph_driver\src):  *     to USART_DR register (USART_SendData()).
-Stm32f10x_usart.c (f:\armpoject\sma\code\project\libraries\stm32f10x_stdperiph_driver\src):  *     (USART_SendData()).
-Stm32f10x_usart.c (f:\armpoject\sma\code\project\libraries\stm32f10x_stdperiph_driver\src):  *     operation to USART_DR register (USART_SendData()).
-Stm32f10x_usart.c (f:\armpoject\sma\code\project\libraries\stm32f10x_stdperiph_driver\src):  *     (USART_SendData()).
-Stm32f10x_usart.h (f:\armpoject\sma\code\project\libraries\stm32f10x_stdperiph_driver\inc):void USART_SendData(USART_TypeDef* USARTx, uint16_t Data);
+---- SensorP_ON Matches (2 in 2 files) ----
+Main.c (f:\armpoject\sma\code\project\user):    SensorP_ON; 
+Reg.h (f:\armpoject\sma\code\project\user):#define  SensorP_ON     GPIO_WriteBit(SENS_POWER_PORT, SENS_POWER_BIT_NUM, Bit_RESET)

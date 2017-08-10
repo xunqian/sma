@@ -107,7 +107,7 @@
 #define     RFU3C                 0x3C   
 #define     RFU3D                 0x3D   
 #define     RFU3E                 0x3E   
-#define     RFU3F		  0x3F
+#define     RFU3F		          0x3F
 
 /////////////////////////////////////////////////////////////////////
 //和MF522通讯时返回的错误代码
@@ -117,11 +117,11 @@
 #define MI_ERR                         (-2)
 
 
-#define MF522_NSS PFout(0)	//PF0	 SDA
-#define MF522_SCK PFout(1)	//PF1
-#define MF522_SI PFout(2)	//PF2
-#define MF522_SO PFin(3)	//PF3
-#define MF522_RST PFout(4)	//PF4
+#define MF522_NSS PBout(12)	//PB12	 SDA
+#define MF522_SCK PBout(13)	//PB13
+#define MF522_SI PBout(15)	//PB15
+#define MF522_SO PBin(14)	//PB14
+#define MF522_RST PBout(1)	//PB1
 
 
 /////////////////////////////////////////////////////////////////////
@@ -150,4 +150,6 @@ unsigned char ReadRawRC(unsigned char Address);
 void SetBitMask(unsigned char reg,unsigned char mask); 
 void ClearBitMask(unsigned char reg,unsigned char mask); 
 void RC522_Init(void);
+void RC522_TEST(void);
+
 #endif 

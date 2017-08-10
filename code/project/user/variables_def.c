@@ -9,7 +9,8 @@ uint8 MODULE_SERIAL[20] = "12345678901234567890";
 //看门狗定时复位
 uint8   wdt_reseten = 1;
 uint16  wdt_resetreg;  
- 
+
+ uint8 sens_selfcheck=0;  //传感器自检标志
  uint8 result=0;
  uint8 detection=0; 		 //检测区是否有卡标志
  uint8 antenna = 0; 		 //天线区是否有卡标志

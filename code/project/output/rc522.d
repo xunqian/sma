@@ -31,3 +31,5 @@
 .\output\rc522.o: .\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_wwdg.h
 .\output\rc522.o: .\Libraries\STM32F10x_StdPeriph_Driver\inc\misc.h
 .\output\rc522.o: .\APP\delay\delay.h
+.\output\rc522.o: .\user\variables_def.h
+.\output\rc522.o: .\user\main.h

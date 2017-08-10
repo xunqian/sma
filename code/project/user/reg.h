@@ -234,9 +234,9 @@
 #define MOTOR_1F2_SET GPIO_WriteBit(MOTOR_1F2_PORT, MOTOR_1F2_BIT_NUM, Bit_SET)
 #define MOTOR_1F2_RESET GPIO_WriteBit(MOTOR_1F2_PORT, MOTOR_1F2_BIT_NUM, Bit_RESET)
 
-
-#define  SensorP_ON     GPIO_WriteBit(SENS_POWER_PORT, SENS_POWER_BIT_NUM, Bit_RESET)
-#define  SensorP_OFF    GPIO_WriteBit(SENS_POWER_PORT, SENS_POWER_BIT_NUM, Bit_SET)
+//传感器电源控制
+#define  SensorP_ON     GPIO_WriteBit(SENS_POWER_PORT, SENS_POWER_BIT_NUM, Bit_SET)
+#define  SensorP_OFF    GPIO_WriteBit(SENS_POWER_PORT, SENS_POWER_BIT_NUM, Bit_RESET)
 //心跳灯指示	D14
 #define  WORK_LIGHT_ON     GPIO_WriteBit(OUT1_PORT, OUT1_BIT_NUM, Bit_SET)
 #define  WORK_LIGHT_OFF    GPIO_WriteBit(OUT1_PORT, OUT1_BIT_NUM, Bit_RESET) 
@@ -250,8 +250,6 @@
 //退币口指示灯 D18
 #define  LED_ON    GPIO_WriteBit(OUT3_PORT, OUT3_BIT_NUM, Bit_SET)
 #define  LED_OFF   GPIO_WriteBit(OUT3_PORT, OUT3_BIT_NUM, Bit_RESET)
-
-//传感器电源控制
 
 
 

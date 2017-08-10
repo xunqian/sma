@@ -36,3 +36,8 @@
 .\output\main.o: user\variables_def.h
 .\output\main.o: user\reg.h
 .\output\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\output\main.o: .\APP\RFID\RC522.h
+.\output\main.o: .\APP\sys\sys.h
+.\output\main.o: .\APP\delay\delay.h
+.\output\main.o: .\APP\iwdg\iwdg.h
+.\output\main.o: .\APP\flash\flash.h

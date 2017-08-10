@@ -5,8 +5,8 @@
 #include "stm32f10x.h"
 
 /* 定义FLASH 使用的IO口 */
-#define FLASH_CS_SET GPIO_SetBits(GPIOG, GPIO_Pin_13)
-#define FLASH_CS_CLR {GPIO_ResetBits(GPIOG, GPIO_Pin_13);\
+#define FLASH_CS_SET GPIO_SetBits(GPIOA, GPIO_Pin_4)
+#define FLASH_CS_CLR {GPIO_ResetBits(GPIOA, GPIO_Pin_4);\
 GPIO_SetBits(GPIOG, GPIO_Pin_14);GPIO_SetBits(GPIOB, GPIO_Pin_12);}
 
 /* 定义各个FLASH的ID */

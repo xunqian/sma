@@ -1,22 +1,95 @@
 #include "RC522.h"
+#include "variables_def.h"
 
 #define MAXRLEN 18
 
 void RC522_Init(void)
 {
-	GPIO_InitTypeDef  GPIO_InitStructure;	 
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOF, ENABLE);	    //使能PF端口时钟
+	GPIO_InitTypeDef  GPIO_InitStructure;
+	//时钟在端口初始化时已使能
+	//RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOF, ENABLE); //使能PF端口时钟
 	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1|GPIO_Pin_0|GPIO_Pin_2|GPIO_Pin_4;			   
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_15|GPIO_Pin_1;//NSS\SCK\MOSI\RST			   
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 	 //推挽输出
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;	 //IO口速度为50MHz
-	GPIO_Init(GPIOF, &GPIO_InitStructure);			     
-	GPIO_SetBits(GPIOF,GPIO_Pin_1|GPIO_Pin_0|GPIO_Pin_2|GPIO_Pin_4);  //拉高
+	GPIO_Init(GPIOB, &GPIO_InitStructure);			     
+	GPIO_SetBits(GPIOB,GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_15|GPIO_Pin_1);  //拉高
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14;   //MISO
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 	 //上拉输入			   
-	GPIO_Init(GPIOF, &GPIO_InitStructure);			     
+	GPIO_Init(GPIOB, &GPIO_InitStructure);			     
 }
+/////////////////////////////////////////////////////////////////////
+//功    能：测试RC522读写
+//参数说明: 
+
+//返    回: 
+/////////////////////////////////////////////////////////////////////
+void RC522_TEST(void)
+{
+	unsigned char status;
+	unsigned char g_ucTempbuf[30];
+	unsigned char data1[16] = {0xff,0x34,0x56,0x78,0xED,0xCB,0xA9,0x87,0x12,0x34,0x56,0x78,0x01,0xFE,0x01,0xFE};
+	//unsigned char data2[4]  = {0,0,0,0x01};
+	unsigned char DefaultKey[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; 
+	status = PcdRequest(PICC_REQALL, g_ucTempbuf);//寻卡
+	if (status != MI_OK)
+	{
+		//寻卡超时时间设为0.5s
+		g_cbWaitRespDly=25;
+		while(g_cbWaitRespDly!=0)
+		{
+			PcdReset();
+			PcdAntennaOff(); 
+			PcdAntennaOn(); 
+			status = PcdRequest(PICC_REQALL, g_ucTempbuf);//寻卡
+			if(status==MI_OK)
+				break;
+		}		
+	}
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25;	
+	do{
+			status = PcdAnticoll(g_ucTempbuf);//防碰撞
+			if(status == MI_OK)
+				break;
+
+		}while(g_cbWaitRespDly!=0);		 
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25;	
+	do{
+			status = PcdSelect(g_ucTempbuf);//选定卡片
+			if(status == MI_OK)
+				break;
+
+		}while(g_cbWaitRespDly!=0);	
+	//超时时间设为0.5s
+	g_cbWaitRespDly=25;	
+	do{
+			//验证卡片密码
+			status = PcdAuthState(PICC_AUTHENT1A, 8, DefaultKey, g_ucTempbuf);
+			if(status == MI_OK)
+				break;
+
+		}while(g_cbWaitRespDly!=0);		 
+	//超时时间设为1s
+	g_cbWaitRespDly=50;	
+	do{			
+			status = PcdWrite(8, data1);//写块
+			if(status == MI_OK)
+				break;
+
+		}while(g_cbWaitRespDly!=0); 
+	//超时时间设为1s
+	g_cbWaitRespDly=50;	
+	do{			
+			status = PcdRead(8, g_ucTempbuf);//读块
+			if(status == MI_OK)
+				break;
+
+		}while(g_cbWaitRespDly!=0); 		
+}
+
 
 
 
@@ -53,9 +126,9 @@ char PcdRequest(unsigned char req_code,unsigned char *pTagType)
        *(pTagType+1) = ucComMF522Buf[1];
    }
    else
-   {   status = MI_ERR;  
-	}
-   
+   {   
+		 status = MI_ERR;  
+	 }   
    return status;
 }
 
@@ -158,6 +231,7 @@ char PcdAuthState(unsigned char auth_mode,unsigned char addr,unsigned char *pKey
     
     status = PcdComMF522(PCD_AUTHENT,ucComMF522Buf,12,ucComMF522Buf,&unLen);
     if ((status != MI_OK) || (!(ReadRawRC(Status2Reg) & 0x08)))
+	//if (status != MI_OK)
     {   status = MI_ERR;   }
     
     return status;
@@ -210,7 +284,7 @@ char PcdWrite(unsigned char addr,unsigned char *pData)
  
     status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
 
-    if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))
+    if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))	
     {   status = MI_ERR;   }
         
     if (status == MI_OK)
@@ -221,7 +295,7 @@ char PcdWrite(unsigned char addr,unsigned char *pData)
         CalulateCRC(ucComMF522Buf,16,&ucComMF522Buf[16]);
 
         status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,18,ucComMF522Buf,&unLen);
-        if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))
+        if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))       
         {   status = MI_ERR;   }
     }
     
@@ -400,7 +474,7 @@ char PcdReset(void)
     WriteRawRC(TReloadRegH,0);
     WriteRawRC(TModeReg,0x8D);
     WriteRawRC(TPrescalerReg,0x3E);
-   WriteRawRC(TxAutoReg,0x40);
+    WriteRawRC(TxAutoReg,0x40);
     return MI_OK;
 }
 

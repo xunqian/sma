@@ -68,7 +68,7 @@ extern uint16  wdt_resetreg;
  extern uint8	 inbox[60];//接收数据缓存
  extern uint8	n;
  extern uint8   receive_buff[256];
- 
+ extern uint8 sens_selfcheck;  //传感器自检标志
  extern uint8  result;
  extern uint8  detection; 		 //检测区是否有卡标志
  extern  uint8 antenna; 		 //天线区是否有卡标志

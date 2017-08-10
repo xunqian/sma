@@ -388,8 +388,8 @@ void TIM3_IRQHandler()	 //定时器3中断函数20ms
     }
     else if(normal_start == 0)
         WORK_LIGHT_OFF;        
-    //RFID操作超时控制 
-    if(g_cbWaitRespDly != 0)//RFID操作超时使能（1s内timeout自减了47次）  
+    //RFID操作超时控制 0.5s
+    if(g_cbWaitRespDly != 0)  
     {
         g_cbWaitRespDly--;
     }	

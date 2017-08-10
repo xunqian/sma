@@ -19,29 +19,23 @@ static void FLASH_WritePage(uint8_t *writeBuff, uint32_t writeAddr, uint16_t wri
 uint16_t FLASH_Init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
-
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB | RCC_APB2Periph_GPIOG, ENABLE);
+	uint16 id;
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
 	
-	/* SD_CS PG14/ FLASH_CS PG13 */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_14;
+	/* FLASH_CS PA4 */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 
-	GPIO_Init(GPIOG, &GPIO_InitStructure);
-	GPIO_SetBits(GPIOG, GPIO_Pin_14 | GPIO_Pin_13);
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_SetBits(GPIOA, GPIO_Pin_4);	
+
+    /* 初始化SPI1 */
+    SPI1_Config();
 	
-	/* ENC28J60_CS PB12 */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
-
-	GPIO_Init(GPIOB, &GPIO_InitStructure);
-	GPIO_SetBits(GPIOB, GPIO_Pin_12); 
-
-    /* 初始化SPI2 */
-    SPI2_Config();
-
     /* 初始化FLASH要读取芯片ID一下 */
-	return(FLASH_ReadID());   
+	FLASH_ReadID();
+	return id;   
 }
 
 /****************************************************************************
@@ -58,13 +52,13 @@ uint16_t FLASH_ReadID(void)
 	
 	FLASH_CS_CLR;            //打开片选
 	
-	SPI2_WriteReadData(0x90);//发送读取ID命令	    
-	SPI2_WriteReadData(0x00); 	    
-	SPI2_WriteReadData(0x00); 	    
-	SPI2_WriteReadData(0x00);
+	SPI1_WriteReadData(0x90);//发送读取ID命令	    
+	SPI1_WriteReadData(0x00); 	    
+	SPI1_WriteReadData(0x00); 	    
+	SPI1_WriteReadData(0x00);
 
-	id |= SPI2_WriteReadData(0xFF) << 8; //读取16位ID 
-	id |= SPI2_WriteReadData(0xFF);
+	id |= SPI1_WriteReadData(0xFF) << 8; //读取16位ID 
+	id |= SPI1_WriteReadData(0xFF);
 		 
 	FLASH_CS_SET;			 //关闭片选   
 	return id;	
@@ -92,8 +86,8 @@ static uint8_t FLASH_CheckBusy(void)
 		}
 		FLASH_CS_CLR;                              //使能器件
 		   
-		SPI2_WriteReadData(EN25X_ReadStatusReg);   //发送读取状态寄存器命令    
-		statusValue = SPI2_WriteReadData(0xFF);    //读取一个字节  
+		SPI1_WriteReadData(EN25X_ReadStatusReg);   //发送读取状态寄存器命令    
+		statusValue = SPI1_WriteReadData(0xFF);    //读取一个字节  
 	
 		FLASH_CS_SET;                              //取消片选
 	}
@@ -114,22 +108,22 @@ static uint8_t FLASH_CheckBusy(void)
 
 void FLASH_ReadData(uint8_t *readBuff, uint32_t readAddr, uint16_t readByteNum)
 {
-    SPI2_SetSpeed(SPI_BaudRatePrescaler_2);
+    SPI1_SetSpeed(SPI_BaudRatePrescaler_2);
     FLASH_CheckBusy();				      //确定FLASH是否处于忙状态
 	FLASH_CS_CLR;    //打开片选
 
 	/* 写读取命令 */
-	SPI2_WriteReadData(EN25X_ReadData);
+	SPI1_WriteReadData(EN25X_ReadData);
 
 	/* 发送24位读取地址 */
-	SPI2_WriteReadData(readAddr >> 16);
-	SPI2_WriteReadData(readAddr >> 8);
-	SPI2_WriteReadData(readAddr);
+	SPI1_WriteReadData(readAddr >> 16);
+	SPI1_WriteReadData(readAddr >> 8);
+	SPI1_WriteReadData(readAddr);
 
 	/* 读取数据 */
 	while(readByteNum--)
 	{
-		*readBuff = SPI2_WriteReadData(0xFF);
+		*readBuff = SPI1_WriteReadData(0xFF);
 		readBuff++;
 	}
 
@@ -148,7 +142,7 @@ static void FLASH_WriteEnable(void)
 {
 	FLASH_CS_CLR;                               //使能器件  
 	 
-    SPI2_WriteReadData(EN25X_WriteEnable);       //发送写使能 
+    SPI1_WriteReadData(EN25X_WriteEnable);       //发送写使能 
 	 
 	FLASH_CS_SET;                               //取消片选     	      	
 }
@@ -168,11 +162,11 @@ static void FLASH_SectorErase(uint32_t eraseAddr)
 
 	FLASH_CS_CLR;        //使能器件
 
-	SPI2_WriteReadData(EN25X_SectorErase); //发送命令
+	SPI1_WriteReadData(EN25X_SectorErase); //发送命令
 
-	SPI2_WriteReadData(eraseAddr >> 16);  //发送24位地址
-	SPI2_WriteReadData(eraseAddr >> 8);
-	SPI2_WriteReadData(eraseAddr);
+	SPI1_WriteReadData(eraseAddr >> 16);  //发送24位地址
+	SPI1_WriteReadData(eraseAddr >> 8);
+	SPI1_WriteReadData(eraseAddr);
 
 	FLASH_CS_SET;                         //取消片选     	      	 
 }
@@ -192,7 +186,7 @@ void FLASH_ChipErase(void)
 
 	FLASH_CS_CLR;        //使能器件
 
-	SPI2_WriteReadData(EN25X_ChipErase); //发送命令
+	SPI1_WriteReadData(EN25X_ChipErase); //发送命令
 
 	FLASH_CS_SET;                         //取消片选
 }
@@ -228,15 +222,15 @@ static void FLASH_WritePage(uint8_t *writeBuff, uint32_t writeAddr, uint16_t wri
  
 		FLASH_CS_CLR;                         //使能器件 
 		
-		SPI2_WriteReadData(EN25X_PageProgram); //发送写命令
+		SPI1_WriteReadData(EN25X_PageProgram); //发送写命令
 	
-		SPI2_WriteReadData(writeAddr >> 16);  //发送24位读取地址
-		SPI2_WriteReadData(writeAddr >> 8);
-		SPI2_WriteReadData(writeAddr);
+		SPI1_WriteReadData(writeAddr >> 16);  //发送24位读取地址
+		SPI1_WriteReadData(writeAddr >> 8);
+		SPI1_WriteReadData(writeAddr);
 
 	    for(i=0; i<byteNum; i++)				  //循环写数
 		{
-			SPI2_WriteReadData(*writeBuff);
+			SPI1_WriteReadData(*writeBuff);
 			writeBuff++;	
 		}
 
@@ -290,7 +284,7 @@ void FLASH_WriteData(uint8_t *writeBuff, uint32_t writeAddr, uint16_t writeByteN
         return;
     }
 #endif
-    SPI2_SetSpeed(SPI_BaudRatePrescaler_2);
+    SPI1_SetSpeed(SPI_BaudRatePrescaler_2);
 	sectorAddr = writeAddr / 4096;	   //扇区地址
 	byteAddr = writeAddr % 4096;	   //扇区偏移地址
 	byte = 4096 - byteAddr;            //扇区剩余地址
