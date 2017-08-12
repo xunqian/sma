@@ -1333,98 +1333,6 @@ uint8 ReadRFID_Serial_Number(uint8 box_no,uint8 *pDATA)
 		}while(g_cbWaitRespDly!=0);
 	return status;
 }
-
-/*****************************************************************************/
-/* Function Description:                                                                                                                      */
-/*****************************************************************************/
-//工作模式
-//参数cmd 当前的命令
-//参数*act 返回的数据指针
-/*****************************************************************************/
-/* Parameters:                                                                                                                                  */
-/*****************************************************************************/
-/*                                                                                                                                                     */
-/* 出票、送票、回收       票函数                                                                                                                                             */
-/*                                                                                                                                                     */
-/*****************************************************************************/
-/* Return Values:          是否成功                                                                                             */
-/*****************************************************************************/
-/*                                                                                                                                                      */
-/*   NULL                                                                                                                                           */
-/*                                                                                                                                                      */
-/*****************************************************************************/
-void normal_working(uint8 cmd,RETURN_CODE *act)
-{
-    //uint8 time=3;
-    switch(cmd)
-    { 
-   
-		case CMD_REJECTACCEPT://拒绝接受
-		{
-			drop_tic_time = DROP_T1;
-	        while(drop_tic_time)
-	              {
-	                	SOLEA_OFF();//关闭入口
-	                	//delay_us(50);
-	       			    read_sensorstatus();                    
-	                    if(sens.SENSORS_STATUS.checkticks9 ==0x10)//U型传感器遮挡为0
-	                    	break;                    
-	              }	   
-						                    
-	       	if(drop_tic_time == 0)
-	                {
-	                    //act->MESSAGE.info[2] = 0;
-	                    act->MESSAGE.result = 'e';
-	                    act->MESSAGE.err_code = CLOSE_entry_err;
-	                }
-	         else
-	                {
-	                    //act->MESSAGE.info[2] = 1;
-	                    act->MESSAGE.result = 's';
-	                    act->MESSAGE.err_code = com_ok;
-	                }           
-			break;
-		}
-		case CMD_ACCEPT://允许接受
-		 {
-            if(antenna==0)//天线区无票
-            {
-                
-	              drop_tic_time = DROP_T1;
-	                while(drop_tic_time)
-	                {
-	                	SOLEA_ON();
-	                    read_sensorstatus();	                    
-	                    if(sens.SENSORS_STATUS.checkticks9 ==0x00)//U型传感器遮挡为0
-	                    	break;                    
-	                }	                
-	                if(drop_tic_time == 0)
-	                {
-	                    //act->MESSAGE.info[2] = 0;
-	                    act->MESSAGE.result = 'e';
-	                    act->MESSAGE.err_code = open_entry_err;
-	                }
-	                else
-	                {
-	                    //act->MESSAGE.info[2] = 1;
-	                    act->MESSAGE.result = 's';
-	                    act->MESSAGE.err_code = com_ok;
-	                }
-                }
-				else
-                {
-                    //act->MESSAGE.info[2] = 1;
-                    act->MESSAGE.result = 'e';
-                    act->MESSAGE.err_code = card_at_RW_area;
-                }
-				 break;
-            }            		
-        default: 
-            break;
-            
-    }
-} 
-
 /*****************************************************************************/
 /* Function Description:                                                                                                                      */
 /*****************************************************************************/
@@ -1444,11 +1352,7 @@ void normal_working(uint8 cmd,RETURN_CODE *act)
 /*****************************************************************************/
 void check_command(void)//检查命令
 {
-    static RETURN_CODE re_code;
-		//static SENS  sens_code; 
-    //static uint8 tic_num1[2],tic_num2[2];
-    //static uint8 tic_flag1=0,tic_flag2=0;
-		//uint8 retemp;
+    static RETURN_CODE re_code;		
     uint8 *p;
     uint8 i=0,j=0;
    // memset(re_code.code,0,53);
@@ -1466,8 +1370,7 @@ void check_command(void)//检查命令
             {
                 re_code.MESSAGE.act_code = inbox[0];
                 re_code.MESSAGE.err_code = com_ok;
-                module_init(&re_code);         		
-				re_code.MESSAGE.info[3] = once_rec_num; 
+                module_init(&re_code);				
 				if(re_code.MESSAGE.err_code != box1_non_existent&&
 					re_code.MESSAGE.err_code != box2_non_existent&&
 					re_code.MESSAGE.err_code != com_ok)
@@ -1477,9 +1380,8 @@ void check_command(void)//检查命令
                     re_code.MESSAGE.result = 'w';
                 else
                     re_code.MESSAGE.result = 's';
-                re_code.MESSAGE.len = 7;
-                cmd_reseive(&re_code);
-				once_rec_num=0;//单次回收TOKEN数量清零
+                re_code.MESSAGE.len = 6;
+                cmd_reseive(&re_code);				
                 normal_start = 1;
                 break;
             }
@@ -1571,20 +1473,18 @@ void check_command(void)//检查命令
 			   	}
 			    else
 			   		re_code.MESSAGE.err_code =no_card_at_RW_area;					
-                check_modelstatus(&re_code);//获取模块状态上传                	
-                re_code.MESSAGE.info[3] = once_rec_num;
+                check_modelstatus(&re_code);//获取模块状态上传               
                 if(re_code.MESSAGE.err_code ==com_ok)
                     re_code.MESSAGE.result = 's';
 				else if(re_code.MESSAGE.err_code ==no_card_at_RW_area)
 					re_code.MESSAGE.result = 'w';
 				else
 					re_code.MESSAGE.result = 'e';				
-                re_code.MESSAGE.len = 7;
-                cmd_reseive(&re_code);
-				once_rec_num=0;//单次回收TOKEN数量清零
+                re_code.MESSAGE.len = 6;
+                cmd_reseive(&re_code);				
                 break;
             }
-            case 0x87:          //复位，用于烧写程序    
+            case 0x87:          //复位
             {
                 re_code.MESSAGE.act_code = inbox[0];
                 check_modelstatus(&re_code);
@@ -1722,8 +1622,7 @@ void check_command(void)//检查命令
                       normal_start = 1;
                     }
                 re_code.MESSAGE.len = 7;
-                cmd_reseive(&re_code);
-                //inbox[0] = 0;
+                cmd_reseive(&re_code);              
                 break;
             }
 			 case 0x8D:          //控制退币口指示灯
@@ -1746,7 +1645,7 @@ void check_command(void)//检查命令
                 normal_start = 1;
                 break;
             }		
-			  case 0x8F:          //设置模块模式:常开or常闭
+			/*  case 0x8F:          //设置模块模式:控制模式
             {
                 re_code.MESSAGE.act_code = inbox[0];
 								re_code.MESSAGE.err_code = com_ok;
@@ -1767,7 +1666,7 @@ void check_command(void)//检查命令
                 cmd_reseive(&re_code);
                 normal_start = 1;
                 break;
-            }
+            }*/
 			 case 0xF0:              //读审计累计值
             {
                 re_code.MESSAGE.act_code = inbox[0];
@@ -1883,10 +1782,17 @@ int main()
 	FLASH_Init();	
     FLASH_WriteData((u8*)TEXT_Buffer, 0, SIZE);
 	FLASH_ReadData(buff, 0, SIZE);
+	//GPIO_ResetBits(GPIOB,GPIO_Pin_1);  //拉低
 	while(1)
 	{		
 		read_sensorstatus();		
-		check_command();	
+		check_command();
+		/*GPIO_SetBits(GPIOB,GPIO_Pin_1);  //拉低
+		delay_ms(1);
+		USART_SendData(USART3,0x11);//通过外设USARTx发送单个数据
+		while(USART_GetFlagStatus(USART3,USART_FLAG_TXE)==Bit_RESET);
+		delay_ms(1);
+		GPIO_ResetBits(GPIOB,GPIO_Pin_1);  //拉低*/
 	}
 }
 

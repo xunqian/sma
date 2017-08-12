@@ -37,14 +37,13 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button22 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button18 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button17 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button24 = new System.Windows.Forms.Button();
-            this.button23 = new System.Windows.Forms.Button();
             this.button21 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -62,8 +61,6 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button11 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button18 = new System.Windows.Forms.Button();
             this.button19 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -155,6 +152,26 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(6, 168);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(131, 45);
+            this.button9.TabIndex = 8;
+            this.button9.Text = "打开指示灯";
+            this.button9.UseVisualStyleBackColor = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(139, 168);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(131, 45);
+            this.button18.TabIndex = 10;
+            this.button18.Text = "关闭指示灯";
+            this.button18.UseVisualStyleBackColor = false;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
+            // 
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -200,9 +217,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button6);
-            this.groupBox3.Controls.Add(this.button24);
-            this.groupBox3.Controls.Add(this.button23);
             this.groupBox3.Controls.Add(this.button21);
             this.groupBox3.Controls.Add(this.button15);
             this.groupBox3.Controls.Add(this.textBox1);
@@ -214,39 +228,9 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "接收数据";
             // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(145, 59);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(124, 35);
-            this.button6.TabIndex = 13;
-            this.button6.Text = "设置为常关模式";
-            this.button6.UseVisualStyleBackColor = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click_1);
-            // 
-            // button24
-            // 
-            this.button24.Location = new System.Drawing.Point(275, 59);
-            this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(120, 35);
-            this.button24.TabIndex = 12;
-            this.button24.Text = "读取模块模式";
-            this.button24.UseVisualStyleBackColor = false;
-            this.button24.Click += new System.EventHandler(this.button24_Click);
-            // 
-            // button23
-            // 
-            this.button23.Location = new System.Drawing.Point(15, 59);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(124, 35);
-            this.button23.TabIndex = 11;
-            this.button23.Text = "设置为常开模式";
-            this.button23.UseVisualStyleBackColor = false;
-            this.button23.Click += new System.EventHandler(this.button23_Click);
-            // 
             // button21
             // 
-            this.button21.Location = new System.Drawing.Point(15, 18);
+            this.button21.Location = new System.Drawing.Point(6, 19);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(124, 35);
             this.button21.TabIndex = 9;
@@ -256,7 +240,7 @@
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(145, 17);
+            this.button15.Location = new System.Drawing.Point(136, 18);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(124, 34);
             this.button15.TabIndex = 2;
@@ -275,7 +259,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(275, 17);
+            this.button7.Location = new System.Drawing.Point(266, 17);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(120, 34);
             this.button7.TabIndex = 0;
@@ -428,26 +412,6 @@
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click_1);
             // 
-            // button9
-            // 
-            this.button9.Location = new System.Drawing.Point(6, 168);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(131, 45);
-            this.button9.TabIndex = 8;
-            this.button9.Text = "打开指示灯";
-            this.button9.UseVisualStyleBackColor = false;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
-            // button18
-            // 
-            this.button18.Location = new System.Drawing.Point(139, 168);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(131, 45);
-            this.button18.TabIndex = 10;
-            this.button18.Text = "关闭指示灯";
-            this.button18.UseVisualStyleBackColor = false;
-            this.button18.Click += new System.EventHandler(this.button18_Click);
-            // 
             // button19
             // 
             this.button19.Location = new System.Drawing.Point(18, 288);
@@ -530,9 +494,6 @@
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Button button21;
         private System.Windows.Forms.Button button22;
-        private System.Windows.Forms.Button button23;
-        private System.Windows.Forms.Button button24;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button25;
     }

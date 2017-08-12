@@ -1,3 +1,2 @@
----- SensorP_ON Matches (2 in 2 files) ----
-Main.c (f:\armpoject\sma\code\project\user):    SensorP_ON; 
-Reg.h (f:\armpoject\sma\code\project\user):#define  SensorP_ON     GPIO_WriteBit(SENS_POWER_PORT, SENS_POWER_BIT_NUM, Bit_RESET)
+---- normal_working Matches (1 in 1 files) ----
+Main.c (f:\armpoject\sma\code\project\user):void normal_working(uint8 cmd,RETURN_CODE *act)

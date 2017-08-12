@@ -280,7 +280,7 @@ void USART3_IRQHandler(void)	//串口3中断函数
 	if(USART_GetITStatus(USART3,USART_IT_RXNE)!=Bit_RESET)//检查指定的USART中断发生与否
 	{
 		k=USART_ReceiveData(USART3);
-		k++;	
+		k++;		
 		USART_SendData(USART3,k);//通过外设USARTx发送单个数据
 		while(USART_GetFlagStatus(USART3,USART_FLAG_TXE)==Bit_RESET);	
 	}
@@ -302,13 +302,13 @@ void UART4_IRQHandler(void)//串口3中断函数
 void UART5_IRQHandler(void)//串口3中断函数
 {
 	static u8 k;
-	USART_ClearFlag(USART3,USART_FLAG_TC);
-	if(USART_GetITStatus(USART3,USART_IT_RXNE)!=Bit_RESET)//检查指定的USART中断发生与否
+	USART_ClearFlag(UART5,USART_FLAG_TC);
+	if(USART_GetITStatus(UART5,USART_IT_RXNE)!=Bit_RESET)//检查指定的USART中断发生与否
 	{
-		k=USART_ReceiveData(USART3);
+		k=USART_ReceiveData(UART5);
 		k++;	
-		USART_SendData(USART3,k);//通过外设USARTx发送单个数据
-		while(USART_GetFlagStatus(USART3,USART_FLAG_TXE)==Bit_RESET);	
+		USART_SendData(UART5,k);//通过外设USARTx发送单个数据
+		while(USART_GetFlagStatus(UART5,USART_FLAG_TXE)==Bit_RESET);	
 	}
 
 }

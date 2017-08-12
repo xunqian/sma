@@ -273,7 +273,21 @@ namespace CommPort
             {
                 textBox1.AppendText("write：\t" + str2 + "\n");
                 serialPort.Write(send, 0, send.Length);
-            }   
+            }
+            switch (temp[2])
+            {
+                case 0x81:
+                    if (temp[3]==0x73)
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("初始化成功" + "\n"); }));
+                    else
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("初始化失败" + "\n"); }));
+                    if (temp[4] == 0x73)
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("初始化成功" + "\n"); }));
+                    break;
+                default:
+                    break;
+
+            }
            
         }       
 
