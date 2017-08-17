@@ -607,8 +607,8 @@ void KEEP_SOLE_A(void)
 	 while(drop_tic_time)
 	 {
 		 read_sensorstatus();
-		 if(sens.SENSORS_STATUS.checkticks7 ==0x00)
-			 break;
+		 if((sens.SENSORS_STATUS.checkticks7==0x00)&&(sens.SENSORS_STATUS.checkticks8 !=0x00))
+			 break;			 
 	 }
 	 KEEP_SOLE_STOP();		
 }
@@ -616,11 +616,12 @@ void KEEP_SOLE_B(void)
 {
 	MOTOR_1F1_SET;
 	MOTOR_1F2_RESET;
+	//delay_ms(50);
 	drop_tic_time = 50;//1秒
  	while(drop_tic_time)
 	 {
 		 read_sensorstatus();
-		 if(sens.SENSORS_STATUS.checkticks8 ==0x00)
+		 if((sens.SENSORS_STATUS.checkticks7!=0x00)&&(sens.SENSORS_STATUS.checkticks8 ==0x00))
 			 break;
 	 }
  	KEEP_SOLE_STOP();
@@ -858,15 +859,15 @@ void read_sensorstatus(void)
 /*****************************************************************************/
 void model_status_anto(RETURN_CODE *re_comm)
 {  
-    if(sens.SENSORS_STATUS.checkticks12== 0)
+    if(sens.SENSORS_STATUS.checkticks13== 0)
         re_comm->MESSAGE.info[0] |= 0x01;        //A到位
     else
         re_comm->MESSAGE.info[0] &= 0xfe;        //A未到位
-    if(sens.SENSORS_STATUS.checkticks13== 0)
+    if(sens.SENSORS_STATUS.checkticks14== 0)
         re_comm->MESSAGE.info[0] |= 0x02;        //B到位
     else
         re_comm->MESSAGE.info[0] &= 0xfd;        //B未到位
-     if(sens.SENSORS_STATUS.checkticks14== 0)
+     if(sens.SENSORS_STATUS.checkticks15== 0)
         re_comm->MESSAGE.info[0] |= 0x04;        //C到位
     else
         re_comm->MESSAGE.info[0] &= 0xfb;        //C未到位
@@ -939,15 +940,25 @@ void sensor_self_check(RETURN_CODE *re_code)
 	}
 	if((sens.SENSORS_STATUS.checkticks3 ==1)&&(sens_last.SENSORS_STATUS.checkticks3==0))
     {
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 2);
+    }
+	else
+	{
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 2);
+     	re_code->MESSAGE.err_code = sens_err;
+		LED_Display(0x13);
+	}
+	if((sens.SENSORS_STATUS.checkticks4 ==1)&&(sens_last.SENSORS_STATUS.checkticks4==0))
+    {
 		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 3);
     }
 	else
 	{
     	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 3);
      	re_code->MESSAGE.err_code = sens_err;
-		LED_Display(0x13);
+		LED_Display(0x14);
 	}
-	if((sens.SENSORS_STATUS.checkticks4 ==1)&&(sens_last.SENSORS_STATUS.checkticks4==0))
+	if((sens.SENSORS_STATUS.checkticks5 ==1)&&(sens_last.SENSORS_STATUS.checkticks5==0))
     {
 		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 4);
     }
@@ -955,9 +966,9 @@ void sensor_self_check(RETURN_CODE *re_code)
 	{
     	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 4);
      	re_code->MESSAGE.err_code = sens_err;
-		LED_Display(0x14);
+		LED_Display(0x15);
 	}
-	if((sens.SENSORS_STATUS.checkticks5 ==1)&&(sens_last.SENSORS_STATUS.checkticks5==0))
+	if((sens.SENSORS_STATUS.checkticks6 ==1)&&(sens_last.SENSORS_STATUS.checkticks6==0))
     {
 		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 5);
     }
@@ -965,25 +976,15 @@ void sensor_self_check(RETURN_CODE *re_code)
 	{
     	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 5);
      	re_code->MESSAGE.err_code = sens_err;
-		LED_Display(0x15);
-	}
-	if((sens.SENSORS_STATUS.checkticks6 ==1)&&(sens_last.SENSORS_STATUS.checkticks6==0))
-    {
-		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 6);
-    }
-	else
-	{
-    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 6);
-     	re_code->MESSAGE.err_code = sens_err;
 		LED_Display(0x16);
 	}
 	if((sens.SENSORS_STATUS.checkticks8 ==1)&&(sens_last.SENSORS_STATUS.checkticks8==0))
     {
-		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 8);
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 7);
     }
 	else
 	{
-    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 8);
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 7);
      	re_code->MESSAGE.err_code = sens_err;
 		LED_Display(0x18);
 	}	
@@ -995,25 +996,25 @@ void sensor_self_check(RETURN_CODE *re_code)
     delay_ms(50);
     read_sensorstatus();     
     SensorP_ON; 
-	delay_ms(50);  
+	delay_ms(200);  
 	read_sensorstatus();
 	if((sens.SENSORS_STATUS.checkticks2 ==1)&&(sens_last.SENSORS_STATUS.checkticks2==0))
     {
-		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 2);
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 1);
     }
 	else
 	{
-    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 2);
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 1);
      	re_code->MESSAGE.err_code = sens_err;
 		LED_Display(0x12);
 	} 
 	if((sens.SENSORS_STATUS.checkticks7 ==1)&&(sens_last.SENSORS_STATUS.checkticks7==0))
     {
-		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 7);
+		re_code->MESSAGE.info[1] =SetBit(re_code->MESSAGE.info[1], 6);
     }
 	else
 	{
-    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 7);
+    	re_code->MESSAGE.info[1] =GetBit(re_code->MESSAGE.info[1], 6);
      	re_code->MESSAGE.err_code = sens_err;
 		LED_Display(0x17);
 	}	
@@ -1464,10 +1465,24 @@ void check_command(void)//检查命令
 				}			  
 			    if(antenna==EXISTENCE)
 			   	{
-					if((1==inbox[1])||(2==inbox[1]))
+					if(1==inbox[1])
+					{					
 						SoleC_Open(DROP_T2);
+						if(drop_tic_time!=0)
+							box_num[0]++;
+					}
+					else if(2==inbox[1])
+					{					
+						SoleC_Open(DROP_T2);
+						if(drop_tic_time!=0)
+							box_num[1]++;
+					}
 					else if(3==inbox[1])
-						SoleB_Open(DROP_T2);	
+					{
+						SoleB_Open(DROP_T2);
+						if(drop_tic_time!=0)
+							box_num[2]++;
+					}
 					if(drop_tic_time==0)
 						antenna=INEXISTENCE;					
 			   	}
@@ -1781,18 +1796,11 @@ int main()
 	RFID_INIT();
 	FLASH_Init();	
     FLASH_WriteData((u8*)TEXT_Buffer, 0, SIZE);
-	FLASH_ReadData(buff, 0, SIZE);
-	//GPIO_ResetBits(GPIOB,GPIO_Pin_1);  //拉低
+	FLASH_ReadData(buff, 0, SIZE);	
 	while(1)
 	{		
 		read_sensorstatus();		
-		check_command();
-		/*GPIO_SetBits(GPIOB,GPIO_Pin_1);  //拉低
-		delay_ms(1);
-		USART_SendData(USART3,0x11);//通过外设USARTx发送单个数据
-		while(USART_GetFlagStatus(USART3,USART_FLAG_TXE)==Bit_RESET);
-		delay_ms(1);
-		GPIO_ResetBits(GPIOB,GPIO_Pin_1);  //拉低*/
+		check_command();		
 	}
 }
 

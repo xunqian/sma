@@ -32,3 +32,4 @@ F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Release\ResolveAssem
 F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Release\CommPort.form1.resources
 F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Release\CommPort.Properties.Resources.resources
 F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Release\CommPort.csproj.GenerateResource.Cache
+F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Release\CommPort.Component1.resources

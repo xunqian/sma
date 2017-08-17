@@ -95,3 +95,10 @@ F:\project\C#\STRONGER_SMA\CommPort\obj\x86\Debug\CommPort.Properties.Resources.
 F:\project\C#\STRONGER_SMA\CommPort\obj\x86\Debug\CommPort.csproj.GenerateResource.Cache
 F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Debug\CommPort.exe
 F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Debug\CommPort.pdb
+F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Debug\ResolveAssemblyReference.cache
+F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Debug\CommPort.Component1.resources
+F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Debug\CommPort.form1.resources
+F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Debug\CommPort.Properties.Resources.resources
+F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\obj\x86\Debug\CommPort.csproj.GenerateResource.Cache
+F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\bin\Debug\CommPort.exe
+F:\ARMPoject\SMA\测试软件\STRONGER_SMA\CommPort\bin\Debug\CommPort.pdb

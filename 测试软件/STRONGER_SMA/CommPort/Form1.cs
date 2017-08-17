@@ -29,13 +29,13 @@ namespace CommPort
             button4.Enabled = false;
             button5.Enabled = false;
             button25.Enabled = false;
-            button6.Enabled = false;
+           // button6.Enabled = false;
             button20.Enabled = false;
             button21.Enabled = false; 
             button22.Enabled = false;
-            button23.Enabled = false;
-            button24.Enabled = false;
-            button9.Enabled = false;
+          //  button23.Enabled = false;
+            //.Enabled = false;
+          //  button9.Enabled = false;
             button10.Enabled = false;
             button11.Enabled = false;
             button12.Enabled = false;
@@ -44,7 +44,7 @@ namespace CommPort
             button15.Enabled = false;
             button19.Enabled = false;
             button17.Enabled = false;
-            button18.Enabled = false;
+           // button18.Enabled = false;
             textBox2.Enabled = false;
             comboBox1.Enabled = false;
             comboBox2.Enabled = false;
@@ -75,13 +75,13 @@ namespace CommPort
                     button4.Enabled = true;
                     button5.Enabled = true;
                     button25.Enabled = true;
-                    button6.Enabled = true;
+                    //button6.Enabled = true;
                     button20.Enabled = true;
                     button21.Enabled = true;
                     button22.Enabled = true;
-                    button23.Enabled = true;
-                    button24.Enabled = true;
-                    button9.Enabled = true;
+                   // button23.Enabled = true;
+                   // button24.Enabled = true;
+                   // button9.Enabled = true;
                     button10.Enabled = true;
                     button11.Enabled = true;
                     button12.Enabled = true;
@@ -90,7 +90,7 @@ namespace CommPort
                     button15.Enabled = true;
                     button19.Enabled = true;
                     button17.Enabled = true;
-                    button18.Enabled = true;
+                   // button18.Enabled = true;
                     textBox2.Enabled = true;
                     comboBox1.Enabled = true;
                     comboBox2.Enabled = true;
@@ -115,13 +115,13 @@ namespace CommPort
                 button4.Enabled = false;
                 button5.Enabled = false;
                 button25.Enabled = false;
-                button6.Enabled = false;
+                //button6.Enabled = false;
                 button20.Enabled = false;
                 button21.Enabled = false;
                 button22.Enabled = false;
-                button23.Enabled = false;
-                button24.Enabled = false;
-                button9.Enabled = false;
+               // button23.Enabled = false;
+               // button24.Enabled = false;
+                //button9.Enabled = false;
                 button10.Enabled = false;
                 button11.Enabled = false;
                 button12.Enabled = false;
@@ -130,7 +130,7 @@ namespace CommPort
                 button15.Enabled = false;
                 button19.Enabled = false;
                 button17.Enabled = false;
-                button18.Enabled = false;
+               // button18.Enabled = false;
                 textBox2.Enabled = false;
                 comboBox1.Enabled = false;
                 comboBox2.Enabled = false;
@@ -239,10 +239,13 @@ namespace CommPort
             byte[] temp1 = new byte[bytes], temp2 = new byte[bytes], temp3 = new byte[bytes];
             int count = 0;
            
-            for(i=0;i<bytes;i++)
+            for(i=0,j=0;i<bytes;i++,j++)
             {
-                temp1[i] = buffer[i];
+                if ((i > 1) && ((temp1[i] == 0x10) && (temp1[i - 1] == 0x10)))
+                    i--;
+                temp1[i] = buffer[j];
             }
+
             read_comm_data(temp1, temp1.Length);
             
  
@@ -260,8 +263,218 @@ namespace CommPort
         
         public static byte ReverseBit(byte b, int index)
         { return (byte)(b ^ (byte)(1 << index)); }
-     
+ void analyseErrorCode(byte ucErrorCode)
+{
+    switch(ucErrorCode)
+    {
+        case 0X00:            
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:命令执行正确" + "\n"); }));            
+            break;
+        case 0X01:            
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:无token在读卡位置警告" + "\n"); }));             
+            break;        
+        case 0X03:             
+             textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:有token卡在读卡位置警告" + "\n"); }));              
+             break;
+        case 0X39:            
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:票箱A不存在" + "\n"); }));             
+            break;
+        case 0X3A:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:票箱B不存在" + "\n"); }));            
+            break;
+		case 0X3B:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:票箱C不存在" + "\n"); })); 
+            break;       
+        case 0X3F:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:有token在读卡位置堵塞错" + "\n"); }));           
+            break;
+        case 0X40:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:打开入口失败" + "\n"); }));              
+            break;
+        case 0X41:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:关闭入口失败" + "\n"); }));             
+            break;
+        case 0X43:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:通道切换A票箱错误" + "\n"); }));            
+            break;
+        case 0X44:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:通道切换B票箱错误" + "\n"); }));            
+            break;       
+        case 0X63:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:传感器故障" + "\n"); }));            
+            break;
+        case 0X64:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:入票口电磁铁故障" + "\n"); }));            
+            break;
+        case 0X65:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:分拣口电磁铁故障" + "\n"); })); 
+            break;
+        case 0X31:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:参数无效" + "\n"); }));
+            break; 
+        case 0XA1:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:无法检测到卡箱的 RFID 卡" + "\n"); }));            
+            break;
+        case 0XA2:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:卡箱 RFID 卡认证失败" + "\n"); }));            
+            break;
+        case 0XA3:
+            textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("错误码/状态码:读写卡箱 RFID 卡参数错" + "\n"); }));              
+            break;     
+            
+        default:
+            break;
+    }
 
+    return;
+}
+ void analyseStatus(byte ucmodulestuteCode)
+{   
+    textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("模块状态：" + "\n"); })); 
+
+    //模块状态    
+    if ((ucmodulestuteCode >> 0 & 0x01)==0x01)
+    {       
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 A ：存在" + "\n"); }));
+    }
+    else
+    {       
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 A ：不存在" + "\n"); }));
+    }
+    //3
+    if ((ucmodulestuteCode >> 1 & 0x01) == 0x01)
+    {        
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 B ：存在" + "\n"); }));
+    }
+    else
+    {        
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 B ：不存在" + "\n"); }));
+    }
+    //0
+    if ((ucmodulestuteCode >> 2 & 0x01) == 0x01)
+    {        
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 C ：存在" + "\n"); }));
+    }
+    else
+    {        
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 C ：不存在" + "\n"); }));
+    }
+    //2
+    if ((ucmodulestuteCode >> 3 & 0x01) == 0x01)
+    {       
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("天线区 : 有票" + "\n"); }));
+    }
+    else
+    {        
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("天线区 : 无票" + "\n"); }));
+    }
+    //4
+    if ((ucmodulestuteCode >> 4 & 0x03) == 0x01)
+    {        
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("通道在A位置" + "\n"); }));
+    }
+
+    else if ((ucmodulestuteCode >> 4 & 0x03) == 0x02)
+    {       
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("通道在B位置" + "\n"); }));
+    }
+	else
+	{		 
+         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("通道故障" + "\n"); }));
+	}
+    if ((ucmodulestuteCode >> 6 & 0x01) == 0x01)
+    {        
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("入票口 : 打开" + "\n"); }));
+    }
+    else
+    {        
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("入票口 : 关闭" + "\n"); }));
+    }
+    if ((ucmodulestuteCode >> 7 & 0x01) == 0x01)
+    {       
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("检测区 : 有票" + "\n"); }));
+    }
+    else
+    {       
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("检测区 : 无票" + "\n"); }));
+    }   
+    
+}
+
+void analyseSENS_Status(byte ucmodulestuteCode)
+{
+    textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("传感器状态：" + "\n"); }));
+
+    //模块状态    
+    if ((ucmodulestuteCode >> 0 & 0x01) == 0x01)
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("入票口对射传感器：故障" + "\n"); }));
+    }
+    else
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("入票口对射传感器：正常" + "\n"); }));
+    }
+    //3
+    if ((ucmodulestuteCode >> 1 & 0x01) == 0x01)
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("入票口关闭检测U型传感器：故障" + "\n"); }));
+    }
+    else
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("入票口关闭检测U型传感器：正常" + "\n"); }));
+    }
+    //0
+    if ((ucmodulestuteCode >> 2 & 0x01) == 0x01)
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("入票口打开检测U型传感器：故障" + "\n"); }));
+    }
+    else
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("入票口打开检测U型传感器：正常" + "\n"); }));
+    }
+    //2
+    if ((ucmodulestuteCode >> 3 & 0x01) == 0x01)
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("退币口对射传感器：故障" + "\n"); }));
+    }
+    else
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("退币口对射传感器：正常" + "\n"); }));
+    }
+    if ((ucmodulestuteCode >> 4 & 0x01) == 0x01)
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("回收口对射传感器：故障" + "\n"); }));
+    }
+    else
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("回收口对射传感器：正常" + "\n"); }));
+    }
+    if ((ucmodulestuteCode >> 5 & 0x01) == 0x01)
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("天线区对射传感器：故障" + "\n"); }));
+    }
+    else
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("天线区对射传感器：正常" + "\n"); }));
+    }
+    if ((ucmodulestuteCode >> 6 & 0x01) == 0x01)
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("A通道检测U型传感器：故障" + "\n"); }));
+    }
+    else
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("A通道检测U型传感器：正常" + "\n"); }));
+    }
+    if ((ucmodulestuteCode >> 7 & 0x01) == 0x01)
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("B通道检测U型传感器：故障" + "\n"); }));
+    }
+    else
+    {
+        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("B通道检测U型传感器：正常" + "\n"); }));
+    }
+
+}
         public void read_comm_data(byte[] temp, int len)
         {
             string str1 = byteToHexStr(temp);
@@ -274,23 +487,87 @@ namespace CommPort
                 textBox1.AppendText("write：\t" + str2 + "\n");
                 serialPort.Write(send, 0, send.Length);
             }
-            switch (temp[2])
+            if ((temp[0] == 0x10) && (temp[1] == 0x02))
             {
-                case 0x81:
-                    if (temp[3]==0x73)
-                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("初始化成功" + "\n"); }));
-                    else
-                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("初始化失败" + "\n"); }));
-                    if (temp[4] == 0x73)
-                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("初始化成功" + "\n"); }));
-                    break;
-                default:
-                    break;
+                switch (temp[2])
+                {
+                    case 0x81:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("初始化 :" + "\n"); }));
+                        analyseErrorCode(temp[4]);
+                        analyseStatus( temp[5]);
+                        break;
+                    case 0x82:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("读模块状态 :" + "\n"); }));
+                        analyseErrorCode(temp[4]);
+                        analyseStatus(temp[5]);
+                        break;
+                    case 0x83:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("允许接收TOKEN :" + "\n"); }));
+                        analyseErrorCode(temp[4]);                        
+                        break;
+                    case 0x84:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("禁止接收TOKEN :" + "\n"); }));
+                        analyseErrorCode(temp[4]);
+                        break;
+                    case 0x86:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("回收命令 :" + "\n"); }));
+                        analyseErrorCode(temp[4]);
+                        analyseStatus(temp[5]);
+                        break;
+                    case 0x87:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("复位 :" + "\n"); }));
+                        analyseErrorCode(temp[4]);                        
+                        break;
+                    case 0x88:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("读版本号 :" + "\n"); }));
+                        analyseErrorCode(temp[4]);
+                        byte[] buff2 = new byte[15];
+                        Array.Copy(temp, 5, buff2, 0, 15);//原数组，开始位，目标数组，开始位，数据长度
+                        string str6 = byteToHexStr(buff2);
+                        textBox1.AppendText("版本号为:\t" + str6 + "\n");
+                        break;
+                    case 0x8A:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("读电子标签 :" + "\n"); }));
+                        analyseErrorCode(temp[4]);
+                        byte[] buff3 = new byte[16];
+                        Array.Copy(temp, 5, buff3, 0, 16);//原数组，开始位，目标数组，开始位，数据长度
+                        string str3 = byteToHexStr(buff3);
+                        textBox1.AppendText("数据为:\t" + str3 + "\n");
+                        break;
+                    case 0x8B:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("写电子标签 :" + "\n"); }));
+                        analyseErrorCode(temp[4]);                        
+                        break;
+                    case 0x8C:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("读电子标签物理编号 :" + "\n"); }));
+                        analyseErrorCode(temp[4]);
+                        byte[] buff4 = new byte[4];
+                        Array.Copy(temp, 5, buff4, 0, 4);//原数组，开始位，目标数组，开始位，数据长度
+                        string str4 = byteToHexStr(buff4);
+                        textBox1.AppendText("数据为:\t" + str4 + "\n");
+                        break;
+                     case 0xF0:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("审计累计值 :" + "\n"); }));
+                        analyseErrorCode(temp[4]);
+                        byte[] buff5 = new byte[12];
+                        Array.Copy(temp, 5, buff5, 0, 12);//原数组，开始位，目标数组，开始位，数据长度
+                        string str5 = byteToHexStr(buff5);
+                        textBox1.AppendText("数据为:\t" + str1 + "\n");
+                        break;
+                     case 0xFE:
+                        textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("模块状态与传感器状态:" + "\n"); }));
+                        analyseErrorCode(temp[4]);
+                        analyseStatus(temp[5]);
+                        analyseSENS_Status(temp[6]);                       
+                        break;
+                    default:
+                        break;
 
+                }
             }
            
-        }       
-
+        }     
+       
         private void button15_Click(object sender, EventArgs e)
         {
             byte[] sendBuff = new byte[6] { 0x10, 0x02, 0x88, 0x10, 0x03, 0x88 };
@@ -530,7 +807,7 @@ namespace CommPort
 
         private void button9_Click(object sender, EventArgs e)
         {
-            byte[] sendBuff = new byte[6] { 0x10, 0x02, 0x8D, 0x10, 0x03, 0x8D };
+            byte[] sendBuff = new byte[8] { 0x10, 0x02, 0x8D, 0x00,0x01,0x10, 0x03, 0x8D };
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
@@ -625,9 +902,15 @@ namespace CommPort
             textBox1.AppendText("读取B票箱物理编号write:\t" + str1 + "\n");
         }
 
+        private void button6_Click_2(object sender, EventArgs e)
+        {
+            byte[] sendBuff = new byte[6] { 0x10, 0x02, 0xfe, 0x10, 0x03, 0xfe };
+            // sendBuff[3] = GetLrc(sendBuff, 3);//50
+            string str1 = byteToHexStr(sendBuff);
+            serialPort.Write(sendBuff, 0, sendBuff.Length);
+            textBox1.AppendText("测试传感器:\t" + str1 + "\n");
 
-       
-        
+        }     
 
        
         

@@ -30,27 +30,13 @@ uint8 model;
 uint8 receive_limits;
 //通道位置
 uint8 current_gallery;
-uint8 next_gallery;
-//电机转动方向，速度
-uint8 cw;
-uint16 speed; 
  //心跳灯控制  1表示启动心跳灯，频率1HZ   ；2心跳灯加速，有故障
  //0停止跳动
  uint8 normal_start = 1; 
  //退币口指示灯标志
  uint8 LED_EN=OFF;//模块控制标志
  //退币口指示灯闪烁时间计数
- uint16 flash_cnt=0;
- 
- //单次回收票卡数量
- uint8 once_rec_num=0;
- //电机循环次数
- uint8 cycl_count=0;
- //E2循环计数标记
- uint8 A_count_SIGN=0;
- uint8 B_count_SIGN=0;
- uint8 C_count_SIGN=0;
- 
+ uint16 flash_cnt=0; 
  //回收or退换票卡数量
  uint32 box_num[3]={0,0,0};
  uint8 sum_open_over_time=0;
