@@ -1164,6 +1164,7 @@ uint8 ReadRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
 		g_cbWaitRespDly=25;
 		while(g_cbWaitRespDly!=0)
 		{
+			read_sensorstatus();
 			PcdReset();
 			PcdAntennaOff(); 
 			PcdAntennaOn(); 
@@ -1175,7 +1176,8 @@ uint8 ReadRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
 	//超时时间设为0.5s
 	g_cbWaitRespDly=25;	
 	do{
-			status = PcdAnticoll(g_ucTempbuf);//防碰撞
+			read_sensorstatus();
+		status = PcdAnticoll(g_ucTempbuf);//防碰撞
 			if(status == MI_OK)
 				break;
 		}while(g_cbWaitRespDly!=0);		 
@@ -1189,14 +1191,16 @@ uint8 ReadRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
 	//超时时间设为0.5s
 	g_cbWaitRespDly=25;	
 	do{
-			//验证卡片密码
+			read_sensorstatus();
+		//验证卡片密码
 			status = PcdAuthState(PICC_AUTHENT1A, block_no, DefaultKey, g_ucTempbuf);
 			if(status == MI_OK)
 				break;
 		}while(g_cbWaitRespDly!=0);
 	g_cbWaitRespDly=50;	
 	do{			
-			status = PcdRead(block_no, pDATA);//读块
+			read_sensorstatus();
+		status = PcdRead(block_no, pDATA);//读块
 			if(status == MI_OK)
 				break;
 		}while(g_cbWaitRespDly!=0); 
@@ -1238,6 +1242,7 @@ uint8 WriteRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
 		g_cbWaitRespDly=25;
 		while(g_cbWaitRespDly!=0)
 		{
+			read_sensorstatus();
 			PcdReset();
 			PcdAntennaOff(); 
 			PcdAntennaOn(); 
@@ -1249,21 +1254,24 @@ uint8 WriteRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
 	//超时时间设为0.5s
 	g_cbWaitRespDly=25;	
 	do{
-			status = PcdAnticoll(g_ucTempbuf);//防碰撞
+		read_sensorstatus();
+		status = PcdAnticoll(g_ucTempbuf);//防碰撞
 			if(status == MI_OK)
 				break;
 		}while(g_cbWaitRespDly!=0);		 
 	//超时时间设为0.5s
 	g_cbWaitRespDly=25;	
 	do{
-			status = PcdSelect(g_ucTempbuf);//选定卡片
+			read_sensorstatus();
+		status = PcdSelect(g_ucTempbuf);//选定卡片
 			if(status == MI_OK)
 				break;
 		}while(g_cbWaitRespDly!=0);	
 	//超时时间设为0.5s
 	g_cbWaitRespDly=25;	
 	do{
-			//验证卡片密码
+			read_sensorstatus();
+		//验证卡片密码
 			status = PcdAuthState(PICC_AUTHENT1A, block_no, DefaultKey, g_ucTempbuf);
 			if(status == MI_OK)
 				break;
@@ -1271,7 +1279,8 @@ uint8 WriteRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
 	//超时时间设为1s
 	g_cbWaitRespDly=50;	
 	do{
-			status = PcdWrite(block_no,pDATA);//写块
+			read_sensorstatus();
+		status = PcdWrite(block_no,pDATA);//写块
 			if(status == MI_OK)
 				break;
 		}while(g_cbWaitRespDly!=0); 
@@ -1789,14 +1798,14 @@ int main()
 	LED_control_flag=0;//默认退币口指示灯为模块控制
 	
 	prvSetupHardware();	
-	//iwdg_init();   //独立看门狗初始化
+	iwdg_init();   //独立看门狗初始化
 	time_init();  //定时器3初始化	
 	usart_all_init();
 	module_init(&re_code);
 	RFID_INIT();
 	FLASH_Init();	
-    FLASH_WriteData((u8*)TEXT_Buffer, 0, SIZE);
-	FLASH_ReadData(buff, 0, SIZE);	
+    //FLASH_WriteData((u8*)TEXT_Buffer, 0, SIZE);
+	//FLASH_ReadData(buff, 0, SIZE);	
 	while(1)
 	{		
 		read_sensorstatus();		

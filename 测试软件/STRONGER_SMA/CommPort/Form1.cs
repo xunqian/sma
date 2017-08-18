@@ -19,7 +19,8 @@ namespace CommPort
             Control.CheckForIllegalCrossThreadCalls = false;//这一行是关键     
         }
 
-
+        public byte box;
+        public byte antenna=0;
         private void Form1_Load(object sender, EventArgs e)
         {
             this.MaximumSize = this.Size;
@@ -238,12 +239,10 @@ namespace CommPort
             int i, j = 0, LEN = 0;
             byte[] temp1 = new byte[bytes], temp2 = new byte[bytes], temp3 = new byte[bytes];
             int count = 0;
-           
-            for(i=0,j=0;i<bytes;i++,j++)
+
+            for (i = 0; i < bytes; i++)
             {
-                if ((i > 1) && ((temp1[i] == 0x10) && (temp1[i - 1] == 0x10)))
-                    i--;
-                temp1[i] = buffer[j];
+                temp1[i] = buffer[i];
             }
 
             read_comm_data(temp1, temp1.Length);
@@ -340,8 +339,7 @@ namespace CommPort
     else
     {       
         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 A ：不存在" + "\n"); }));
-    }
-    //3
+    }   
     if ((ucmodulestuteCode >> 1 & 0x01) == 0x01)
     {        
         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 B ：存在" + "\n"); }));
@@ -349,8 +347,7 @@ namespace CommPort
     else
     {        
         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 B ：不存在" + "\n"); }));
-    }
-    //0
+    }   
     if ((ucmodulestuteCode >> 2 & 0x01) == 0x01)
     {        
         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 C ：存在" + "\n"); }));
@@ -358,17 +355,17 @@ namespace CommPort
     else
     {        
         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("票箱 C ：不存在" + "\n"); }));
-    }
-    //2
+    }    
     if ((ucmodulestuteCode >> 3 & 0x01) == 0x01)
-    {       
+    {
+        antenna = 1;
         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("天线区 : 有票" + "\n"); }));
     }
     else
-    {        
+    {
+        antenna = 0;
         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("天线区 : 无票" + "\n"); }));
-    }
-    //4
+    }  
     if ((ucmodulestuteCode >> 4 & 0x03) == 0x01)
     {        
         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("通道在A位置" + "\n"); }));
@@ -481,10 +478,10 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             textBox1.AppendText("read：\t" + str1 + "\n");        
             
             byte[] send = new byte[2] { 0x10, 0x05 };
-            string str2 = byteToHexStr(send);
+           // string str2 = byteToHexStr(send);
             if (temp[0] == 0x10 && temp[1] == 0x06)
             {
-                textBox1.AppendText("write：\t" + str2 + "\n");
+                //textBox1.AppendText("write：\t" + str2 + "\n");
                 serialPort.Write(send, 0, send.Length);
             }
             if ((temp[0] == 0x10) && (temp[1] == 0x02))
@@ -558,7 +555,12 @@ void analyseSENS_Status(byte ucmodulestuteCode)
                         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("模块状态与传感器状态:" + "\n"); }));
                         analyseErrorCode(temp[4]);
                         analyseStatus(temp[5]);
-                        analyseSENS_Status(temp[6]);                       
+                        if (temp[5] == 0x10)
+                        {
+                            analyseSENS_Status(temp[7]);
+                        }
+                        else
+                            analyseSENS_Status(temp[6]);
                         break;
                     default:
                         break;
@@ -910,7 +912,12 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             serialPort.Write(sendBuff, 0, sendBuff.Length);
             textBox1.AppendText("测试传感器:\t" + str1 + "\n");
 
-        }     
+        }
+
+       
+        
+
+        
 
        
         
