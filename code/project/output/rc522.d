@@ -33,3 +33,4 @@
 .\output\rc522.o: .\APP\delay\delay.h
 .\output\rc522.o: .\user\variables_def.h
 .\output\rc522.o: .\user\main.h
+.\output\rc522.o: .\APP\SysTick\systick.h

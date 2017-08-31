@@ -1,6 +1,6 @@
 #include "RC522.h"
 #include "variables_def.h"
-
+#include "systick.h"
 #define MAXRLEN 18
 
 void RC522_Init(void)
@@ -127,7 +127,7 @@ char PcdRequest(unsigned char req_code,unsigned char *pTagType)
    }
    else
    {   
-		 status = MI_ERR;  
+		 status =(char) MI_ERR;  
 	 }   
    return status;
 }
@@ -163,7 +163,7 @@ char PcdAnticoll(unsigned char *pSnr)
 
          }
          if (snr_check != ucComMF522Buf[i])
-         {   status = MI_ERR;    }
+         {   status = (char)MI_ERR;    }
     }
     
     SetBitMask(CollReg,0x80);
@@ -199,7 +199,7 @@ char PcdSelect(unsigned char *pSnr)
     if ((status == MI_OK) && (unLen == 0x18))
     {   status = MI_OK;  }
     else
-    {   status = MI_ERR;    }
+    {   status =(char) MI_ERR;    }
 
     return status;
 }
@@ -232,7 +232,7 @@ char PcdAuthState(unsigned char auth_mode,unsigned char addr,unsigned char *pKey
     status = PcdComMF522(PCD_AUTHENT,ucComMF522Buf,12,ucComMF522Buf,&unLen);
     if ((status != MI_OK) || (!(ReadRawRC(Status2Reg) & 0x08)))
 	//if (status != MI_OK)
-    {   status = MI_ERR;   }
+    {   status =(char) MI_ERR;   }
     
     return status;
 }
@@ -261,7 +261,7 @@ char PcdRead(unsigned char addr,unsigned char *pData)
         {    *(pData+i) = ucComMF522Buf[i];   }
     }
     else
-    {   status = MI_ERR;   }
+    {   status =(char) MI_ERR;   }
     
     return status;
 }
@@ -285,7 +285,7 @@ char PcdWrite(unsigned char addr,unsigned char *pData)
     status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
 
     if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))	
-    {   status = MI_ERR;   }
+    {   status =(char) MI_ERR;   }
         
     if (status == MI_OK)
     {
@@ -296,7 +296,7 @@ char PcdWrite(unsigned char addr,unsigned char *pData)
 
         status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,18,ucComMF522Buf,&unLen);
         if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))       
-        {   status = MI_ERR;   }
+        {   status =(char) MI_ERR;   }
     }
     
     return status;
@@ -324,7 +324,7 @@ char PcdValue(unsigned char dd_mode,unsigned char addr,unsigned char *pValue)
     status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
 
     if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))
-    {   status = MI_ERR;   }
+    {   status =(char) MI_ERR;   }
         
     if (status == MI_OK)
     {
@@ -334,7 +334,7 @@ char PcdValue(unsigned char dd_mode,unsigned char addr,unsigned char *pValue)
         CalulateCRC(ucComMF522Buf,4,&ucComMF522Buf[4]);
         unLen = 0;
         status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,6,ucComMF522Buf,&unLen);
-        if (status != MI_ERR)
+        if (status !=(char) MI_ERR)
         {    status = MI_OK;    }
     }
     
@@ -347,7 +347,7 @@ char PcdValue(unsigned char dd_mode,unsigned char addr,unsigned char *pValue)
         status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
 
         if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))
-        {   status = MI_ERR;   }
+        {   status = (char)MI_ERR;   }
     }
     return status;
 }
@@ -371,7 +371,7 @@ char PcdBakValue(unsigned char sourceaddr, unsigned char goaladdr)
     status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
 
     if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))
-    {   status = MI_ERR;   }
+    {   status =(char) MI_ERR;   }
     
     if (status == MI_OK)
     {
@@ -382,12 +382,12 @@ char PcdBakValue(unsigned char sourceaddr, unsigned char goaladdr)
         CalulateCRC(ucComMF522Buf,4,&ucComMF522Buf[4]);
  
         status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,6,ucComMF522Buf,&unLen);
-        if (status != MI_ERR)
+        if (status != (char)MI_ERR)
         {    status = MI_OK;    }
     }
     
     if (status != MI_OK)
-    {    return MI_ERR;   }
+    {    return (char)MI_ERR;   }
     
     ucComMF522Buf[0] = PICC_TRANSFER;
     ucComMF522Buf[1] = goaladdr;
@@ -397,7 +397,7 @@ char PcdBakValue(unsigned char sourceaddr, unsigned char goaladdr)
     status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
 
     if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))
-    {   status = MI_ERR;   }
+    {   status = (char)MI_ERR;   }
 
     return status;
 }
@@ -409,16 +409,16 @@ char PcdBakValue(unsigned char sourceaddr, unsigned char goaladdr)
 /////////////////////////////////////////////////////////////////////
 char PcdHalt(void)
 {
-    char status;
+   // char status;
     unsigned int  unLen;
     unsigned char ucComMF522Buf[MAXRLEN]; 
 
     ucComMF522Buf[0] = PICC_HALT;
     ucComMF522Buf[1] = 0;
     CalulateCRC(ucComMF522Buf,2,&ucComMF522Buf[2]);
- 
-    status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
-
+		
+    //status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
+		PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
     return MI_OK;
 }
 
@@ -587,7 +587,7 @@ char PcdComMF522(unsigned char Command,
                  unsigned char *pOutData, 
                  unsigned int  *pOutLenBit)
 {
-    char status = MI_ERR;
+    char status = (char)MI_ERR;
     unsigned char irqEn   = 0x00;
     unsigned char waitFor = 0x00;
     unsigned char lastBits;
@@ -635,7 +635,7 @@ char PcdComMF522(unsigned char Command,
          {
              status = MI_OK;
              if (n & irqEn & 0x01)
-             {   status = MI_NOTAGERR;   }
+             {   status = (char)MI_NOTAGERR;   }
              if (Command == PCD_TRANSCEIVE)
              {
                	n = ReadRawRC(FIFOLevelReg);
@@ -653,7 +653,7 @@ char PcdComMF522(unsigned char Command,
             }
          }
          else
-         {   status = MI_ERR;   }
+         {   status =(char) MI_ERR;   }
         
    }
    

@@ -46,53 +46,6 @@ compiling time.c...
 compiling spi.c...
 compiling flash.c...
 compiling RC522.c...
-APP\RFID\RC522.c(130): warning:  #68-D: integer conversion resulted in a change of sign
-                 status = MI_ERR;  
-APP\RFID\RC522.c(166): warning:  #68-D: integer conversion resulted in a change of sign
-           {   status = MI_ERR;    }
-APP\RFID\RC522.c(202): warning:  #68-D: integer conversion resulted in a change of sign
-      {   status = MI_ERR;    }
-APP\RFID\RC522.c(235): warning:  #68-D: integer conversion resulted in a change of sign
-      {   status = MI_ERR;   }
-APP\RFID\RC522.c(264): warning:  #68-D: integer conversion resulted in a change of sign
-      {   status = MI_ERR;   }
-APP\RFID\RC522.c(288): warning:  #68-D: integer conversion resulted in a change of sign
-      {   status = MI_ERR;   }
-APP\RFID\RC522.c(299): warning:  #68-D: integer conversion resulted in a change of sign
-          {   status = MI_ERR;   }
-APP\RFID\RC522.c(327): warning:  #68-D: integer conversion resulted in a change of sign
-      {   status = MI_ERR;   }
-APP\RFID\RC522.c(337): warning:  #514-D: pointless comparison of unsigned integer with a negative constant
-          if (status != MI_ERR)
-APP\RFID\RC522.c(350): warning:  #68-D: integer conversion resulted in a change of sign
-          {   status = MI_ERR;   }
-APP\RFID\RC522.c(374): warning:  #68-D: integer conversion resulted in a change of sign
-      {   status = MI_ERR;   }
-APP\RFID\RC522.c(385): warning:  #514-D: pointless comparison of unsigned integer with a negative constant
-          if (status != MI_ERR)
-APP\RFID\RC522.c(390): warning:  #68-D: integer conversion resulted in a change of sign
-      {    return MI_ERR;   }
-APP\RFID\RC522.c(400): warning:  #68-D: integer conversion resulted in a change of sign
-      {   status = MI_ERR;   }
-APP\RFID\RC522.c(412): warning:  #550-D: variable "status" was set but never used
-      char status;
-APP\RFID\RC522.c(457): warning:  #223-D: function "delay_us" declared implicitly
-                delay_us(10);                  
-APP\RFID\RC522.c(501): warning:  #223-D: function "delay_us" declared implicitly
-                 delay_us(10);    //STM32需要多加的延时时间。51的不需要加
-APP\RFID\RC522.c(510): warning:  #223-D: function "delay_us" declared implicitly
-                 delay_us(10);    //STM32需要多加的延时时间。51的不需要加
-APP\RFID\RC522.c(537): warning:  #223-D: function "delay_us" declared implicitly
-                delay_us(10);      //STM32需要多加的延时时间。51的不需要加
-APP\RFID\RC522.c(546): warning:  #223-D: function "delay_us" declared implicitly
-                delay_us(10);    //STM32需要多加的延时时间。51的不需要加
-APP\RFID\RC522.c(590): warning:  #68-D: integer conversion resulted in a change of sign
-      char status = MI_ERR;
-APP\RFID\RC522.c(638): warning:  #68-D: integer conversion resulted in a change of sign
-               {   status = MI_NOTAGERR;   }
-APP\RFID\RC522.c(656): warning:  #68-D: integer conversion resulted in a change of sign
-           {   status = MI_ERR;   }
-APP\RFID\RC522.c: 23 warnings, 0 errors
 compiling sys.c...
 compiling delay.c...
 APP\delay\delay.c(6): warning:  #550-D: variable "fac_ms" was set but never used
@@ -100,9 +53,9 @@ APP\delay\delay.c(6): warning:  #550-D: variable "fac_ms" was set but never used
 APP\delay\delay.c: 1 warning, 0 errors
 compiling iwdg.c...
 linking...
-Program Size: Code=20556 RO-data=336 RW-data=156 ZI-data=6268  
+Program Size: Code=20536 RO-data=336 RW-data=156 ZI-data=6268  
 FromELF: creating hex file...
-".\output\TIOM.axf" - 0 Error(s), 24 Warning(s).
+".\output\TIOM.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   F:\ARMPoject\SMA\code\project\RTE

@@ -1,10 +1,11 @@
-Output: WireList Netlist
-Type  : WireListNetlist
-From  : Project [PCB_Project1.PrjPCB]
-   Generated File[Sheet1.NET]
+Output: Simple BOM
+Type  : SimpleBOM
+From  : Variant [[No Variations]] of Project [PCB_Project1.PrjPCB]
+   Generated File[Sheet1.BOM]
+   Generated File[Sheet1.CSV]
 
 
-Files Generated   : 1
+Files Generated   : 2
 Documents Printed : 0
 
-Finished Output Generation At 9:51:43 On 2017/6/22 ÐÇÆÚËÄ
+Finished Output Generation At 10:49:48 On 2017/8/19 ÐÇÆÚÁù

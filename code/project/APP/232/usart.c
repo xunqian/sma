@@ -259,10 +259,10 @@ void usart5_init()
 
 {
 	usart1_init();
-	usart2_init();
-	usart3_init();
-	usart4_init();
-	usart5_init();
+	//usart2_init();
+	//usart3_init();
+   //	usart4_init();
+	//usart5_init();
 }
 
 
