@@ -1317,6 +1317,7 @@ uint8 ReadRFID_Serial_Number(uint8 box_no,uint8 *pDATA)
 		g_cbWaitRespDly=25;
 		while(g_cbWaitRespDly!=0)
 		{
+			read_sensorstatus();
 			PcdReset();
 			PcdAntennaOff(); 
 			PcdAntennaOn(); 
@@ -1328,6 +1329,7 @@ uint8 ReadRFID_Serial_Number(uint8 box_no,uint8 *pDATA)
 	//超时时间设为0.5s
 	g_cbWaitRespDly=25; 
 	do{
+			read_sensorstatus();
 			status = PcdAnticoll(pDATA);//防碰撞
 			if(status == MI_OK)
 				break;
@@ -1336,6 +1338,7 @@ uint8 ReadRFID_Serial_Number(uint8 box_no,uint8 *pDATA)
 	//超时时间设为0.5s
 	g_cbWaitRespDly=25; 
 	do{
+			read_sensorstatus();
 			status = PcdSelect(pDATA);//选定卡片
 			if(status == MI_OK)
 				break;
@@ -1343,6 +1346,80 @@ uint8 ReadRFID_Serial_Number(uint8 box_no,uint8 *pDATA)
 		}while(g_cbWaitRespDly!=0);
 	return status;
 }
+/*****************************************************************************/
+/* Function Description:                                                                                                                      */
+/*****************************************************************************/
+//连续回收多张票
+/*****************************************************************************/
+/* Parameters:                                                                                                                                  */
+/*****************************************************************************/
+/*   gallery: 通道选择                                                                                                                                                  */
+/*    num: 回收数量                                                                                                                                                 */
+/*                                                                                                                                                     */
+/*****************************************************************************/
+/* Return Values:          是否成功                                                                                             */
+/*****************************************************************************/
+/*                                                                                                                                                      */
+/*   NULL                                                                                                                                           */
+/*                                                                                                                                                      */
+/*****************************************************************************/
+
+void check_contri_set(uint8 gallery,uint8 num)
+
+{
+	while(num)
+	{
+		read_sensorstatus();
+		if(1==gallery)
+		{
+			if(current_gallery==B_gallery)
+			{
+				KEEP_SOLE_A();
+			}						
+			if(drop_tic_time!=0)
+				{
+				 	
+				    drop_tic_time=0;
+				}		
+		}				
+		if(2==gallery)
+		{
+			if(current_gallery==A_gallery)
+			{
+				KEEP_SOLE_B();
+			}						
+			if(drop_tic_time!=0)
+			{		 	
+			    drop_tic_time=0;
+			}			
+		}			  
+		if(antenna==EXISTENCE)
+	   	{
+			if(1==gallery)
+			{					
+				SoleC_Open(DROP_T2);
+				if(drop_tic_time!=0)
+					num--;
+			}
+			else if(2==gallery)
+			{					
+				SoleC_Open(DROP_T2);
+				if(drop_tic_time!=0)
+					num--;
+			}
+			else if(3==gallery)
+			{
+				SoleB_Open(DROP_T2);
+				if(drop_tic_time!=0)
+					num--;
+			}
+			if(drop_tic_time==0)
+				antenna=INEXISTENCE;					
+	   	}
+		
+	}
+}
+
 /*****************************************************************************/
 /* Function Description:                                                                                                                      */
 /*****************************************************************************/
@@ -1433,7 +1510,22 @@ void check_command(void)//检查命令
                 cmd_reseive(&re_code);
                 normal_start = 1;
                 break;
-            }           
+            }  
+		   case 0x85:          //连续回收N张票
+            {
+                re_code.MESSAGE.act_code = inbox[0];
+				re_code.MESSAGE.err_code = com_ok;                
+                receive_limits=allow;				
+                if(re_code.MESSAGE.err_code != com_ok)
+                    re_code.MESSAGE.result = 'e';
+                else
+                    re_code.MESSAGE.result = 's';                
+                re_code.MESSAGE.len = 3;
+                cmd_reseive(&re_code);
+				check_contri_set(inbox[1],inbox[2]);
+                normal_start = 1;
+                break;
+            }  
             case 0x86:          //回收
             {
 				re_code.MESSAGE.act_code = inbox[0];	
@@ -1796,6 +1888,7 @@ int main()
 	antenna=INEXISTENCE;//清空天线区标志
 	receive_limits=prohibit; // 默认模块控制模块为禁止接受模式
 	LED_control_flag=0;//默认退币口指示灯为模块控制
+	contri_recover_set=disable;//连续回收多张票设置为禁止
 	
 	prvSetupHardware();	
 	iwdg_init();   //独立看门狗初始化
@@ -1803,7 +1896,8 @@ int main()
 	usart_all_init();
 	module_init(&re_code);
 	RFID_INIT();
-	FLASH_Init();	
+	FLASH_Init();
+	RFID_ANTENNA1_ON;
     //FLASH_WriteData((u8*)TEXT_Buffer, 0, SIZE);
 	//FLASH_ReadData(buff, 0, SIZE);	
 	while(1)

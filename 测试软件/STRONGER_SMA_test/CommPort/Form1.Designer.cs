@@ -316,7 +316,7 @@
             // 
             // button16
             // 
-            this.button16.Location = new System.Drawing.Point(8, 168);
+            this.button16.Location = new System.Drawing.Point(12, 168);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(131, 35);
             this.button16.TabIndex = 37;
@@ -331,7 +331,6 @@
             this.textBox2.Size = new System.Drawing.Size(123, 21);
             this.textBox2.TabIndex = 36;
             this.textBox2.Text = "123456789";
-            //this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label3
             // 
@@ -431,13 +430,15 @@
             // 
             // radioButton1
             // 
+            this.radioButton1.AutoCheck = false;
             this.radioButton1.AutoSize = true;
             this.radioButton1.Location = new System.Drawing.Point(50, 537);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(53, 16);
+            this.radioButton1.Size = new System.Drawing.Size(53, 20);
             this.radioButton1.TabIndex = 11;
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "A票箱";
+            this.radioButton1.UseCompatibleTextRendering = true;
             this.radioButton1.UseVisualStyleBackColor = true;
             this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
@@ -456,6 +457,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
+            this.radioButton3.Checked = true;
             this.radioButton3.Location = new System.Drawing.Point(191, 537);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(59, 16);
@@ -480,7 +482,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(123, 21);
             this.textBox4.TabIndex = 40;
-            //this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+            this.textBox4.Text = "2";
             // 
             // button8
             // 

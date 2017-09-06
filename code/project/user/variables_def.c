@@ -28,6 +28,8 @@ uint16  wdt_resetreg;
 uint8 model;  
  //允许/禁止接收设置
 uint8 receive_limits;
+  //连续回收使能设置
+uint8 contri_recover_set;
 //通道位置
 uint8 current_gallery;
  //心跳灯控制  1表示启动心跳灯，频率1HZ   ；2心跳灯加速，有故障

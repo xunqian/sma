@@ -19,7 +19,7 @@ namespace CommPort
             Control.CheckForIllegalCrossThreadCalls = false;//这一行是关键     
         }
 
-        public byte box;
+        public byte box=0x03;
         public byte antenna=0;
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -30,7 +30,7 @@ namespace CommPort
             button4.Enabled = false;
             button5.Enabled = false;
             button25.Enabled = false;
-           // button6.Enabled = false;
+            button8.Enabled = false;
             button20.Enabled = false;
             button21.Enabled = false; 
             button22.Enabled = false;
@@ -76,7 +76,7 @@ namespace CommPort
                     button4.Enabled = true;
                     button5.Enabled = true;
                     button25.Enabled = true;
-                    //button6.Enabled = true;
+                    button8.Enabled = true;
                     button20.Enabled = true;
                     button21.Enabled = true;
                     button22.Enabled = true;
@@ -116,7 +116,7 @@ namespace CommPort
                 button4.Enabled = false;
                 button5.Enabled = false;
                 button25.Enabled = false;
-                //button6.Enabled = false;
+                button8.Enabled = false;
                 button20.Enabled = false;
                 button21.Enabled = false;
                 button22.Enabled = false;
@@ -937,35 +937,17 @@ void analyseSENS_Status(byte ucmodulestuteCode)
                 {
                     byteArray[i] = (byte)(byteArray[i] - 0x30);
                     num=num+(byteArray[i]*(Math.Pow(10,( byteArray.Length-1-i))));
-                }               
-            while(num>0)
-            {
-                byte[] sendBuff = new byte[6] { 0x10, 0x02, 0x82, 0x10, 0x03, 0x82 };
+                }
+          
+                byte[] sendBuff = new byte[8] { 0x10, 0x02, 0x85, 0x01, 0x05, 0x10, 0x03, 0x81 };
+                sendBuff[3]=box;
+                sendBuff[4]=(byte)num;
+                sendBuff[7] = (byte)(sendBuff[2] ^ sendBuff[3] ^ sendBuff[4]);
                 serialPort.Write(sendBuff, 0, sendBuff.Length);
-                System.Threading.Thread.Sleep(100);
-                int bytes = serialPort.BytesToRead;
-                byte[] buffer = new byte[bytes];
-                if (bytes == 0)
-                {
-                    return;
-                }
-                serialPort.Read(buffer, 0, bytes);
-                read_comm_data(buffer, bytes);
-                if (antenna == 1)
-                {
-                    byte[] sendBuff1 = new byte[7] { 0x10, 0x02, 0x86, 0x01, 0x10, 0x03, 0x87 };                    
-                    sendBuff1[3] = box;
-                    if (sendBuff1[3]==0x01)
-                         sendBuff1[6] = 0x87;
-                    if (sendBuff1[3] == 0x02)
-                        sendBuff1[6] = 0x84;
-                    if (sendBuff1[3] == 0x03)
-                        sendBuff1[6] = 0x85;
-                    serialPort.Write(sendBuff1, 0, sendBuff1.Length);
-                    num--;                   
-                }
+                
+             
 
-            }
+            
         }     
 
        

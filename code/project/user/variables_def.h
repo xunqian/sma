@@ -94,7 +94,8 @@ extern  uint8 normal_start;
  extern uint8 LED_EN;
  //退币口指示灯闪烁时间计数
 extern  uint16 flash_cnt;
- 
+   //连续回收使能设置
+extern uint8 contri_recover_set;
  //传感器状态
  extern SENSORS sens;
  extern SENSORS sens_last;

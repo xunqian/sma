@@ -186,7 +186,11 @@ typedef union
         uint8   info[49];   //各种信息
     }MESSAGE;
 }RETURN_CODE;
-
+typedef enum
+{
+	enable,
+	disable
+}status_bool;
 typedef enum //枚举
 {
 	com_ok = 0,					         //无错误

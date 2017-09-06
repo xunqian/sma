@@ -1,2 +1,28 @@
----- normal_working Matches (1 in 1 files) ----
-Main.c (f:\armpoject\sma\code\project\user):void normal_working(uint8 cmd,RETURN_CODE *act)
+---- com_ok Matches (27 in 2 files) ----
+Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):					re_code.MESSAGE.err_code != com_ok)
+Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):				re_code.MESSAGE.err_code = com_ok;               
+Main.c (f:\armpoject\sma\code\project\user):                if(re_code.MESSAGE.err_code != com_ok)
+Main.c (f:\armpoject\sma\code\project\user):				re_code.MESSAGE.err_code = com_ok;                
+Main.c (f:\armpoject\sma\code\project\user):                if(re_code.MESSAGE.err_code != com_ok)
+Main.c (f:\armpoject\sma\code\project\user):				re_code.MESSAGE.err_code = com_ok;                
+Main.c (f:\armpoject\sma\code\project\user):                if(re_code.MESSAGE.err_code != com_ok)
+Main.c (f:\armpoject\sma\code\project\user):						 	re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):							re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):						 	re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):							re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):                if(re_code.MESSAGE.err_code ==com_ok)
+Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):                      if(re_code.MESSAGE.err_code == com_ok)
+Main.c (f:\armpoject\sma\code\project\user):                        if(re_code.MESSAGE.err_code == com_ok)
+Main.c (f:\armpoject\sma\code\project\user):                   if(re_code.MESSAGE.err_code == com_ok)
+Main.c (f:\armpoject\sma\code\project\user):				re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):								re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):								re_code.MESSAGE.err_code = com_ok;   
+Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):                	re_code.MESSAGE.err_code = com_ok;
+Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
+Main.h (f:\armpoject\sma\code\project\user):	com_ok = 0,					         //ÎÞ´íÎó
