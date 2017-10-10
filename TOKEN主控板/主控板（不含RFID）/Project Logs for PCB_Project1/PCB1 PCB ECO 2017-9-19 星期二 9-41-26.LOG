@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=TXD_M1 Pin=J10-1
+Removed Pin From Net: NetName=RXD_M1 Pin=J10-2
+Removed Pin From Net: NetName=GND Pin=R118-1
+Removed Pin From Net: NetName=NetP1_3 Pin=R118-2
+Added Component: Designator=R118(0805)
+Added Pin To Net: NetName=RXD_M1 Pin=J10-1
+Added Pin To Net: NetName=TXD_M1 Pin=J10-2
+Added Pin To Net: NetName=GND Pin=R118-1
+Added Pin To Net: NetName=NetP1_3 Pin=R118-2
+Added Member To Class: ClassName=Sheet1 Member=Component R118 1K-0805-5%

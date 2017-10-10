@@ -1,0 +1,136 @@
+Removed Pin From Net: NetName=GND Pin=C71-1
+Removed Pin From Net: NetName=VCC3V3 Pin=C71-2
+Removed Pin From Net: NetName=VCC3V3 Pin=C72-1
+Removed Pin From Net: NetName=GND Pin=C72-2
+Removed Pin From Net: NetName=GND Pin=C73-1
+Removed Pin From Net: NetName=DVDD Pin=C73-2
+Removed Pin From Net: NetName=GND Pin=C76-1
+Removed Pin From Net: NetName=DVDD Pin=C76-2
+Removed Pin From Net: NetName=NetC79_1 Pin=C79-1
+Removed Pin From Net: NetName=NetC79_2 Pin=C79-2
+Removed Pin From Net: NetName=NetC80_1 Pin=C80-1
+Removed Pin From Net: NetName=NetC80_2 Pin=C80-2
+Removed Pin From Net: NetName=AVDD Pin=C84-2
+Removed Pin From Net: NetName=AVDD Pin=C85-2
+Removed Pin From Net: NetName=GND Pin=C92-1
+Removed Pin From Net: NetName=GND Pin=C93-1
+Removed Pin From Net: NetName=G1 Pin=D54-2
+Removed Pin From Net: NetName=G2 Pin=D55-2
+Removed Pin From Net: NetName=G3 Pin=D56-2
+Removed Pin From Net: NetName=G4 Pin=D57-2
+Removed Pin From Net: NetName=NetC79_2 Pin=J21-2
+Removed Pin From Net: NetName=NetC80_2 Pin=J22-2
+Removed Pin From Net: NetName=VCC3V3 Pin=L2-1
+Removed Pin From Net: NetName=GND Pin=L3-1
+Removed Pin From Net: NetName=AVDD Pin=L4-2
+Removed Pin From Net: NetName=VCC3V3 Pin=L7-1
+Removed Pin From Net: NetName=DVDD Pin=L7-2
+Removed Pin From Net: NetName=GND Pin=R118-1
+Removed Pin From Net: NetName=NetP1_3 Pin=R118-2
+Removed Pin From Net: NetName=VCC3V3 Pin=R119-1
+Removed Pin From Net: NetName=VCC3V3 Pin=R120-1
+Removed Pin From Net: NetName=VCC3V3 Pin=R121-1
+Removed Pin From Net: NetName=VCC3V3 Pin=R122-1
+Removed Pin From Net: NetName=VCC3V3 Pin=R124-1
+Removed Pin From Net: NetName=VCC3V3 Pin=R125-1
+Removed Pin From Net: NetName=VCC3V3 Pin=R126-1
+Removed Pin From Net: NetName=VCC3V3 Pin=R127-1
+Removed Pin From Net: NetName=VCC3V3 Pin=R131-1
+Removed Pin From Net: NetName=VCC3V3 Pin=R132-1
+Removed Pin From Net: NetName=RST Pin=R132-2
+Removed Pin From Net: NetName=G1 Pin=U18-2
+Removed Pin From Net: NetName=NetC79_1 Pin=U18-3
+Removed Pin From Net: NetName=G2 Pin=U19-2
+Removed Pin From Net: NetName=NetC80_1 Pin=U19-3
+Removed Pin From Net: NetName=G3 Pin=U20-2
+Removed Pin From Net: NetName=G4 Pin=U21-2
+Removed Pin From Net: NetName=GND Pin=U23-1
+Removed Pin From Net: NetName=DVDD Pin=U23-2
+Removed Pin From Net: NetName=DVDD Pin=U23-3
+Removed Pin From Net: NetName=GND Pin=U23-4
+Removed Pin From Net: NetName=GND Pin=U23-5
+Removed Pin From Net: NetName=RST Pin=U23-6
+Removed Pin From Net: NetName=AVDD Pin=U23-15
+Removed Pin From Net: NetName=SPI2_NSS Pin=U23-24
+Removed Pin From Net: NetName=SPI2_SCK Pin=U23-29
+Removed Pin From Net: NetName=SPI2_MOSI Pin=U23-30
+Removed Pin From Net: NetName=SPI2_MISO Pin=U23-31
+Removed Pin From Net: NetName=VCC3V3 Pin=U23-32
+Removed Member From Class: ClassName=Sheet1 Member=C71
+Removed Member From Class: ClassName=Sheet1 Member=C72
+Removed Member From Class: ClassName=Sheet1 Member=C73
+Removed Member From Class: ClassName=Sheet1 Member=C74
+Removed Member From Class: ClassName=Sheet1 Member=C75
+Removed Member From Class: ClassName=Sheet1 Member=C76
+Removed Member From Class: ClassName=Sheet1 Member=C77
+Removed Member From Class: ClassName=Sheet1 Member=C79
+Removed Member From Class: ClassName=Sheet1 Member=C80
+Removed Member From Class: ClassName=Sheet1 Member=C81
+Removed Member From Class: ClassName=Sheet1 Member=C82
+Removed Member From Class: ClassName=Sheet1 Member=C84
+Removed Member From Class: ClassName=Sheet1 Member=C85
+Removed Member From Class: ClassName=Sheet1 Member=C86
+Removed Member From Class: ClassName=Sheet1 Member=C87
+Removed Member From Class: ClassName=Sheet1 Member=C88
+Removed Member From Class: ClassName=Sheet1 Member=C90
+Removed Member From Class: ClassName=Sheet1 Member=C91
+Removed Member From Class: ClassName=Sheet1 Member=C92
+Removed Member From Class: ClassName=Sheet1 Member=C93
+Removed Member From Class: ClassName=Sheet1 Member=D54
+Removed Member From Class: ClassName=Sheet1 Member=D55
+Removed Member From Class: ClassName=Sheet1 Member=D56
+Removed Member From Class: ClassName=Sheet1 Member=D57
+Removed Member From Class: ClassName=Sheet1 Member=J21
+Removed Member From Class: ClassName=Sheet1 Member=J22
+Removed Member From Class: ClassName=Sheet1 Member=J23
+Removed Member From Class: ClassName=Sheet1 Member=J24
+Removed Member From Class: ClassName=Sheet1 Member=L2
+Removed Member From Class: ClassName=Sheet1 Member=L3
+Removed Member From Class: ClassName=Sheet1 Member=L4
+Removed Member From Class: ClassName=Sheet1 Member=L5
+Removed Member From Class: ClassName=Sheet1 Member=L6
+Removed Member From Class: ClassName=Sheet1 Member=L7
+Removed Member From Class: ClassName=Sheet1 Member=R119
+Removed Member From Class: ClassName=Sheet1 Member=R120
+Removed Member From Class: ClassName=Sheet1 Member=R121
+Removed Member From Class: ClassName=Sheet1 Member=R122
+Removed Member From Class: ClassName=Sheet1 Member=R124
+Removed Member From Class: ClassName=Sheet1 Member=R125
+Removed Member From Class: ClassName=Sheet1 Member=R126
+Removed Member From Class: ClassName=Sheet1 Member=R127
+Removed Member From Class: ClassName=Sheet1 Member=R129
+Removed Member From Class: ClassName=Sheet1 Member=R130
+Removed Member From Class: ClassName=Sheet1 Member=R131
+Removed Member From Class: ClassName=Sheet1 Member=R132
+Removed Member From Class: ClassName=Sheet1 Member=U18
+Removed Member From Class: ClassName=Sheet1 Member=U19
+Removed Member From Class: ClassName=Sheet1 Member=U20
+Removed Member From Class: ClassName=Sheet1 Member=U21
+Removed Member From Class: ClassName=Sheet1 Member=U23
+Removed Member From Class: ClassName=Sheet1 Member=Y1
+Change Component Comment : Designator=L1 Old Comment=Inductor New Comment=100uH 12*12*7
+Change Component Comment : Designator=U5 Old Comment=MCU New Comment=STM32F103VET6
+Added Component: Designator=J11(IDC14-2.0-F)
+Added Component: Designator=R118(0805)
+Added Pin To Net: NetName=NetC80_1 Pin=J11-1
+Added Pin To Net: NetName=GND Pin=J11-2
+Added Pin To Net: NetName=DVDD Pin=J11-3
+Added Pin To Net: NetName=AVDD Pin=J11-4
+Added Pin To Net: NetName=NetC79_2 Pin=J11-5
+Added Pin To Net: NetName=NetC79_1 Pin=J11-6
+Added Pin To Net: NetName=NetC80_2 Pin=J11-7
+Added Pin To Net: NetName=G5 Pin=J11-8
+Added Pin To Net: NetName=G4 Pin=J11-9
+Added Pin To Net: NetName=G3 Pin=J11-10
+Added Pin To Net: NetName=G2 Pin=J11-11
+Added Pin To Net: NetName=G1 Pin=J11-12
+Added Pin To Net: NetName=GND Pin=R118-1
+Added Pin To Net: NetName=NetP1_3 Pin=R118-2
+Change Net Name : Old Net Name=AVDD New Net Name=SDA
+Change Net Name : Old Net Name=DVDD New Net Name=SCK
+Change Net Name : Old Net Name=NetC79_1 New Net Name=MOSI
+Change Net Name : Old Net Name=NetC79_2 New Net Name=MISO
+Change Net Name : Old Net Name=NetC80_1 New Net Name=3.3VIN
+Change Net Name : Old Net Name=NetC80_2 New Net Name=/RST
+Added Member To Class: ClassName=Sheet1 Member=Component J11 IDC14-2.0-F
+Added Room: Name=Sheet1

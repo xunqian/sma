@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=VCC3V3 Pin=R64-1
+Removed Pin From Net: NetName=GND Pin=R118-1
+Removed Pin From Net: NetName=NetP1_3 Pin=R118-2
+Change Component Comment : Designator=C17 Old Comment=35YXF1000MEFC1V12.5*25 New Comment=35YXF470MEFC1V12.5*25
+Change Component Comment : Designator=L1 Old Comment=Inductor New Comment=100uH 12*12*7
+Change Component Comment : Designator=U5 Old Comment=MCU New Comment=STM32F103VET6
+Added Pin To Net: NetName=GND Pin=R64-1
+Added Pin To Net: NetName=GND Pin=R118-1
+Added Pin To Net: NetName=NetP1_3 Pin=R118-2
+Added Room: Name=Sheet1

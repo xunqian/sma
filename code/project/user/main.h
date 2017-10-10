@@ -229,6 +229,7 @@ typedef struct
 }RESEIVE;
 
 extern void SOLEA_OFF(void);
+void RFID_Gallery_select(uint8 Gallery);
 
 
 #endif

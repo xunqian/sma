@@ -641,7 +641,10 @@ char PcdComMF522(unsigned char Command,
                	n = ReadRawRC(FIFOLevelReg);
               	lastBits = ReadRawRC(ControlReg) & 0x07;
                 if (lastBits)
-                {   *pOutLenBit = (n-1)*8 + lastBits;   }
+                {   
+									*pOutLenBit = (n-1)*8 + lastBits;
+									//j=(n-1)*8 + lastBits;
+								}
                 else
                 {   *pOutLenBit = n*8;   }
                 if (n == 0)

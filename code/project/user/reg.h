@@ -132,6 +132,29 @@
 #define LED_G_PORT                (GPIOA)
 #define LED_G_BIT_NUM             (GPIO_Pin_0)//OUT
 
+#define RFID_OUT5_PORT                 (GPIOD)
+#define RFID_OUT5_BIT_NUM              (GPIO_Pin_0)//OUT
+
+
+#define RFID_OUT4_PORT                 (GPIOD)
+#define RFID_OUT4_BIT_NUM              (GPIO_Pin_1)//OUT
+
+#define RFID_OUT3_PORT                 (GPIOB)
+#define RFID_OUT3_BIT_NUM              (GPIO_Pin_0)//OUT
+
+#define RFID_OUT2_PORT                 (GPIOC)
+#define RFID_OUT2_BIT_NUM              (GPIO_Pin_5)//OUT
+
+#define RFID_OUT1_PORT                 (GPIOC)
+#define RFID_OUT1_BIT_NUM              (GPIO_Pin_4)//OUT
+
+
+#define OUT9_PORT                 (GPIOA)
+#define OUT9_BIT_NUM              (GPIO_Pin_12)//OUT
+
+#define OUT8_PORT                 (GPIOA)
+#define OUT8_BIT_NUM              (GPIO_Pin_11)//OUT
+
 #define OUT7_PORT                 (GPIOE)
 #define OUT7_BIT_NUM              (GPIO_Pin_7)//OUT
 
@@ -194,24 +217,24 @@
 
 // bitmaps of GPIO bits used
 #define GPA_IN_BITMAPS     (GPIO_Pin_8)
-#define GPA_OUT_BITMAPS    (GPIO_Pin_1|GPIO_Pin_0)
+#define GPA_OUT_BITMAPS    (GPIO_Pin_12|GPIO_Pin_11|GPIO_Pin_1|GPIO_Pin_0)
 
 #define GPB_IN_BITMAPS     (GPIO_Pin_6|GPIO_Pin_5)
-#define GPB_OUT_BITMAPS    (GPIO_Pin_9|GPIO_Pin_8|GPIO_Pin_7)
+#define GPB_OUT_BITMAPS    (GPIO_Pin_9|GPIO_Pin_8|GPIO_Pin_7|GPIO_Pin_0)
 
 #define GPC_IN_BITMAPS     (GPIO_Pin_9|GPIO_Pin_8|GPIO_Pin_7|GPIO_Pin_6)
 #define GPC_OUT_BITMAPS    (GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15|GPIO_Pin_0\
-														|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3)
+							|GPIO_Pin_1|GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5)
 
 #define GPD_IN_BITMAPS     (GPIO_Pin_15|GPIO_Pin_14|GPIO_Pin_13|GPIO_Pin_12\
-														|GPIO_Pin_11|GPIO_Pin_10|GPIO_Pin_9|GPIO_Pin_7\
-														|GPIO_Pin_6|GPIO_Pin_5|GPIO_Pin_4)
-#define GPD_OUT_BITMAPS    (GPIO_Pin_8)
+							|GPIO_Pin_11|GPIO_Pin_10|GPIO_Pin_9|GPIO_Pin_7\
+							|GPIO_Pin_6|GPIO_Pin_5|GPIO_Pin_4)
+#define GPD_OUT_BITMAPS    (GPIO_Pin_8|GPIO_Pin_1|GPIO_Pin_0)
 
 #define GPE_IN_BITMAPS     (GPIO_Pin_2|GPIO_Pin_3|GPIO_Pin_14|GPIO_Pin_15)
 #define GPE_OUT_BITMAPS    (GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8\
-														|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_13\
-														|GPIO_Pin_1|GPIO_Pin_0)
+						   |GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_13\
+						   |GPIO_Pin_1|GPIO_Pin_0)
 														
 #define SOLE1_ON   GPIO_WriteBit(SOLE1_PORT, SOLE1_BIT_NUM, Bit_SET)
 #define SOLE1_OFF  GPIO_WriteBit(SOLE1_PORT, SOLE1_BIT_NUM, Bit_RESET)
@@ -237,9 +260,9 @@
 //传感器电源控制
 #define  SensorP_ON     GPIO_WriteBit(SENS_POWER_PORT, SENS_POWER_BIT_NUM, Bit_SET)
 #define  SensorP_OFF    GPIO_WriteBit(SENS_POWER_PORT, SENS_POWER_BIT_NUM, Bit_RESET)
-//心跳灯指示	D14
-#define  WORK_LIGHT_ON     GPIO_WriteBit(OUT1_PORT, OUT1_BIT_NUM, Bit_SET)
-#define  WORK_LIGHT_OFF    GPIO_WriteBit(OUT1_PORT, OUT1_BIT_NUM, Bit_RESET) 
+//心跳灯指示
+#define  WORK_LIGHT_ON     GPIO_WriteBit(OUT8_PORT, OUT8_BIT_NUM, Bit_SET)
+#define  WORK_LIGHT_OFF    GPIO_WriteBit(OUT8_PORT, OUT8_BIT_NUM, Bit_RESET) 
 //天线区有票指示D16
 #define  antenna_LED_ON    GPIO_WriteBit(OUT2_PORT, OUT2_BIT_NUM, Bit_SET)
 #define  antenna_LED_OFF   GPIO_WriteBit(OUT2_PORT, OUT2_BIT_NUM, Bit_RESET)
@@ -250,12 +273,30 @@
 //退币口指示灯 D18
 #define  LED_ON    GPIO_WriteBit(OUT3_PORT, OUT3_BIT_NUM, Bit_SET)
 #define  LED_OFF   GPIO_WriteBit(OUT3_PORT, OUT3_BIT_NUM, Bit_RESET)
-
 //RFID天线1
-#define  RFID_ANTENNA1_ON    GPIO_WriteBit(OUT7_PORT, OUT7_BIT_NUM, Bit_SET)
-#define  RFID_ANTENNA1_OFF   GPIO_WriteBit(OUT7_PORT, OUT7_BIT_NUM, Bit_RESET)
+
+//#define  RFID_ANTENNA1_ON    GPIO_WriteBit(OUT7_PORT, OUT7_BIT_NUM, Bit_RESET)
+//#define  RFID_ANTENNA1_OFF   GPIO_WriteBit(OUT7_PORT, OUT7_BIT_NUM, Bit_SET)
 
 
+#define  RFID_ANTENNA1_ON    GPIO_WriteBit(RFID_OUT1_PORT, RFID_OUT1_BIT_NUM, Bit_RESET)
+#define  RFID_ANTENNA1_OFF   GPIO_WriteBit(RFID_OUT1_PORT, RFID_OUT1_BIT_NUM, Bit_SET)
+
+//RFID天线2
+#define  RFID_ANTENNA2_ON    GPIO_WriteBit(RFID_OUT2_PORT, RFID_OUT2_BIT_NUM, Bit_RESET)
+#define  RFID_ANTENNA2_OFF   GPIO_WriteBit(RFID_OUT2_PORT, RFID_OUT2_BIT_NUM, Bit_SET)
+
+//RFID天线3
+#define  RFID_ANTENNA3_ON    GPIO_WriteBit(RFID_OUT3_PORT, RFID_OUT3_BIT_NUM, Bit_RESET)
+#define  RFID_ANTENNA3_OFF   GPIO_WriteBit(RFID_OUT3_PORT, RFID_OUT3_BIT_NUM, Bit_SET)
+
+//RFID天线4
+#define  RFID_ANTENNA4_ON    GPIO_WriteBit(RFID_OUT4_PORT, RFID_OUT4_BIT_NUM, Bit_RESET)
+#define  RFID_ANTENNA4_OFF   GPIO_WriteBit(RFID_OUT4_PORT, RFID_OUT4_BIT_NUM, Bit_SET)
+
+//RFID天线5
+#define  RFID_ANTENNA5_ON    GPIO_WriteBit(RFID_OUT5_PORT, RFID_OUT5_BIT_NUM, Bit_RESET)
+#define  RFID_ANTENNA5_OFF   GPIO_WriteBit(RFID_OUT5_PORT, RFID_OUT5_BIT_NUM, Bit_SET)
 
 
 #endif

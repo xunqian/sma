@@ -1,28 +1,4 @@
----- com_ok Matches (27 in 2 files) ----
-Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):					re_code.MESSAGE.err_code != com_ok)
-Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):				re_code.MESSAGE.err_code = com_ok;               
-Main.c (f:\armpoject\sma\code\project\user):                if(re_code.MESSAGE.err_code != com_ok)
-Main.c (f:\armpoject\sma\code\project\user):				re_code.MESSAGE.err_code = com_ok;                
-Main.c (f:\armpoject\sma\code\project\user):                if(re_code.MESSAGE.err_code != com_ok)
-Main.c (f:\armpoject\sma\code\project\user):				re_code.MESSAGE.err_code = com_ok;                
-Main.c (f:\armpoject\sma\code\project\user):                if(re_code.MESSAGE.err_code != com_ok)
-Main.c (f:\armpoject\sma\code\project\user):						 	re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):							re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):						 	re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):							re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):                if(re_code.MESSAGE.err_code ==com_ok)
-Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):                      if(re_code.MESSAGE.err_code == com_ok)
-Main.c (f:\armpoject\sma\code\project\user):                        if(re_code.MESSAGE.err_code == com_ok)
-Main.c (f:\armpoject\sma\code\project\user):                   if(re_code.MESSAGE.err_code == com_ok)
-Main.c (f:\armpoject\sma\code\project\user):				re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):								re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):								re_code.MESSAGE.err_code = com_ok;   
-Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):                	re_code.MESSAGE.err_code = com_ok;
-Main.c (f:\armpoject\sma\code\project\user):                re_code.MESSAGE.err_code = com_ok;
-Main.h (f:\armpoject\sma\code\project\user):	com_ok = 0,					         //ÎÞ´íÎó
+---- WORK_LIGHT_ON Matches (3 in 2 files) ----
+Reg.h (f:\armpoject\sma\code\project\user):#define  WORK_LIGHT_ON     GPIO_WriteBit(OUT1_PORT, OUT1_BIT_NUM, Bit_SET)
+Stm32f10x_it.c (f:\armpoject\sma\code\project\user):            WORK_LIGHT_ON;
+Stm32f10x_it.c (f:\armpoject\sma\code\project\user):            WORK_LIGHT_ON;

@@ -1,0 +1,6 @@
+Change Component Footprint: Designator=J13 Old Footprint=2.5-2P  180 JXT New Footprint=2.5-2P  90 JXT
+Change Component Footprint: Designator=J10 Old Footprint=H3 New Footprint=2.5-3P  90 JXT
+Change Component Footprint: Designator=J9 Old Footprint=W143-6 New Footprint=2.5-6P  90 JXT
+Change Component Comment : Designator=J13 Old Comment=A2508WV-2P New Comment=A2508WR-F-2P
+Change Component Comment : Designator=J10 Old Comment=A2508WV-3P New Comment=A2508WR-F-3P
+Change Component Comment : Designator=J9 Old Comment=A2508WV-6P New Comment=A2508WR-F-6P

@@ -233,8 +233,8 @@ static void vGPIOInit(void)
     GPIO_Init(GPIOA, &GPIO_InitStructure);
 	// configure the following GPA IO as OUTPUT IO
 	// ------------------------------------------------------------------
-	// | 15  14  13  12  11  10  9	 8	 7	  6 	5	 4		3	2	1		 0	|
-	// |									                                       LED_F    LED_G|
+	// | 15  14  13    12          11        10     9	    8	 7	  6 	5 4 3	2	1		 0	|
+	// |			 heartbeat2	   heartbeat1					            LED_F    LED_G|
 	// ------------------------------------------------------------------
 	GPIO_InitStructure.GPIO_Pin =  GPA_OUT_BITMAPS;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -243,7 +243,7 @@ static void vGPIOInit(void)
 	// configure the following GPBIO as input FLOATING IO
 	// ------------------------------------------------------------------
 	// | 15  14  13  12  11  10  9 8	 7	  6 	  5	 4		3	2	1		 0	|
-	// |								 IN6 IN5                                                 |
+	// |								 IN6 IN5                                             |
 	// ------------------------------------------------------------------
 	GPIO_InitStructure.GPIO_Pin =  GPB_IN_BITMAPS;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
@@ -252,7 +252,7 @@ static void vGPIOInit(void)
 	// configure the following GPB IO as OUTPUT  IO
 	// ------------------------------------------------------------------
 	// | 15  14  13  12  11  10   9	   8	     7	6 	5	 4		3	2	1		 0	|
-	// |					    SOLE3	SOLE4 SOLE5 		                                                      |
+	// |					    SOLE3	SOLE4 SOLE5 		                                               G3  |
 	// ------------------------------------------------------------------
 	GPIO_InitStructure.GPIO_Pin =  GPB_OUT_BITMAPS;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -269,8 +269,8 @@ static void vGPIOInit(void)
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
 	// configure the following GPC IO as OUTPUT IO
 	// ------------------------------------------------------------------
-	// |   15         14           13          12  11  10  9  8  7  6 	5 4      3	         2	          1		   0	      |
-	// |LED_B    LED_A   MOTOR_2F2						LED_E   LED_D      LED_DP   LED_C    |
+	// |   15         14           13      12  11  10  9  8  7  6 5    4      3	         2	          1		   0	      |
+	// |LED_B    LED_A   MOTOR_2F2				 G2  G1 LED_E   LED_D      LED_DP   LED_C    |
 	// ------------------------------------------------------------------
 	GPIO_InitStructure.GPIO_Pin =  GPC_OUT_BITMAPS;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -288,7 +288,7 @@ static void vGPIOInit(void)
 	// configure the following GPD IO as input OUTPUT IO
 	// ------------------------------------------------------------------
 	// | 15  14  13  12  11  10  9	   8	      7	  6 	5	 4		3	2	1		 0	|
-	// |					       SENS_POWER	                                                                  |
+	// |					       SENS_POWER	                                              G4          G5   |
 	// ------------------------------------------------------------------
 	GPIO_InitStructure.GPIO_Pin =  GPD_OUT_BITMAPS;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
@@ -316,10 +316,10 @@ static void vGPIOInit(void)
 	GPIO_Init(GPIOE, &GPIO_InitStructure);
 
     OutGPA = (u16)(0x0003);//0000 0000 0000 0011
-    OutGPB = (u16)(0x0000);//0000 0000 0000 0000   
-    OutGPC = (u16)(0xc00f);//1100 0000 0000 1111
+    OutGPB = (u16)(0x0001);//0000 0000 0000 0001   
+    OutGPC = (u16)(0xc03f);//1100 0000 0011 1111
     //传感器电源初始化为上电状态
-    OutGPD = (u16)(0x0100);//0000 0000 0000 0000
+    OutGPD = (u16)(0x0103);//0000 0000 0000 0011
 	OutGPE = (u16)(0x0000);//0000 0000 0000 0000
 	GPIO_Write(GPIOA, OutGPA);
     GPIO_Write(GPIOB, OutGPB);
@@ -1129,6 +1129,7 @@ void module_init(RETURN_CODE *re_comm)
 	sensor_self_check(re_comm); 
 	detection=INEXISTENCE;	  //清空检测区标志
 	antenna = INEXISTENCE;    //清空天线区标志	
+	KEEP_SOLE_STOP();
     LED_OFF;//退币口指示灯灭   
 } 
 /*****************************************************************************/
@@ -1155,14 +1156,16 @@ void module_init(RETURN_CODE *re_comm)
 uint8 ReadRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
 {
 	unsigned char status=0xfe;
-	unsigned char g_ucTempbuf[30];	
+	unsigned char g_ucTempbuf[30];		
 	unsigned char DefaultKey[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; 
+	//RFID_Gallery_select(box_no-2);
 	status = PcdRequest(PICC_REQALL, g_ucTempbuf);//寻卡
 	if (status != MI_OK)
 	{
 		//寻卡超时时间设为0.5s
 		g_cbWaitRespDly=25;
 		while(g_cbWaitRespDly!=0)
+		//while(1)
 		{
 			read_sensorstatus();
 			PcdReset();
@@ -1235,6 +1238,7 @@ uint8 WriteRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
 	unsigned char status=0xfe;
 	unsigned char g_ucTempbuf[30];	
 	unsigned char DefaultKey[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF}; 
+	RFID_Gallery_select(box_no-2);
 	status = PcdRequest(PICC_REQALL, g_ucTempbuf);//寻卡
 	if (status != MI_OK)
 	{
@@ -1309,7 +1313,8 @@ uint8 WriteRFIDBLOCK(uint8 box_no,uint8 block_no,uint8 *pDATA)
 uint8 ReadRFID_Serial_Number(uint8 box_no,uint8 *pDATA)
 {
 	unsigned char status=0xfe;
-	//unsigned char g_ucTempbuf[30];	 
+	//unsigned char g_ucTempbuf[30];	
+	RFID_Gallery_select(box_no-2);
 	status = PcdRequest(PICC_REQALL,pDATA);//寻卡
 	if (status != MI_OK)
 	{
@@ -1717,7 +1722,7 @@ void check_command(void)//检查命令
             {
                 re_code.MESSAGE.act_code = inbox[0];
 		         if(3==inbox[1]||4==inbox[1])
-                 {
+                 {                 	
                    re_code.MESSAGE.err_code = ReadRFID_Serial_Number(inbox[1],re_code.MESSAGE.info);                
        
                    if(re_code.MESSAGE.err_code == com_ok)
@@ -1872,6 +1877,71 @@ void RFID_INIT(void)
  	PcdAntennaOn();
 	delay_ms(10);
 }
+/*****************************************************************************/
+/* Function Description:                                                                                               */
+/*****************************************************************************/
+//RFID读写器通道选择
+/*****************************************************************************/
+/* Parameters:                                                                                                            */
+/*****************************************************************************/
+/*   Galleryy: 通道选择                                                                                                                          */
+/*                                                                                                                              */
+/*                                                                                                                            */
+/*****************************************************************************/
+/* Return Values:                                                                                                      */
+/*****************************************************************************/
+/*                                                                                                                              */
+/*  无                                                                                                                      */
+/*                                                                                                                              */
+/*****************************************************************************/
+
+void RFID_Gallery_select(uint8 Gallery)
+{
+	switch(Gallery)
+	{
+		case 5:
+			RFID_ANTENNA1_ON;
+			RFID_ANTENNA2_OFF;
+			RFID_ANTENNA3_OFF;
+			RFID_ANTENNA4_OFF;
+			RFID_ANTENNA5_OFF;
+
+		break;
+		case 3:
+			RFID_ANTENNA1_OFF;
+			RFID_ANTENNA2_ON;
+			RFID_ANTENNA3_OFF;
+			RFID_ANTENNA4_OFF;
+			RFID_ANTENNA5_OFF;
+		break;
+		case 4:
+			RFID_ANTENNA1_OFF;
+			RFID_ANTENNA2_OFF;
+			RFID_ANTENNA3_ON;
+			RFID_ANTENNA4_OFF;
+			RFID_ANTENNA5_OFF;
+		break;
+		case 2:
+			RFID_ANTENNA1_OFF;
+			RFID_ANTENNA2_OFF;
+			RFID_ANTENNA3_OFF;
+			RFID_ANTENNA4_ON;
+			RFID_ANTENNA5_OFF;
+
+		break;
+		case 1:
+			RFID_ANTENNA1_OFF;
+			RFID_ANTENNA2_OFF;
+			RFID_ANTENNA3_OFF;
+			RFID_ANTENNA4_OFF;
+			RFID_ANTENNA5_ON;
+		break;
+		default:
+		break;
+
+	}
+	
+}
 
 /****************************************************************************
 * Function Name  : main
@@ -1897,13 +1967,15 @@ int main()
 	module_init(&re_code);
 	RFID_INIT();
 	FLASH_Init();
-	RFID_ANTENNA1_ON;
+	//RFID_ANTENNA4_ON;
     //FLASH_WriteData((u8*)TEXT_Buffer, 0, SIZE);
 	//FLASH_ReadData(buff, 0, SIZE);	
 	while(1)
 	{		
 		read_sensorstatus();		
-		check_command();		
+		check_command();
+		//USART_SendData(USART1,WXDLE);
+		//while(USART_GetFlagStatus(USART1,USART_FLAG_TXE)==Bit_RESET);
 	}
 }
 

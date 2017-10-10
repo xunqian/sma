@@ -1,0 +1,8 @@
+Change Component Footprint: Designator=J11 Old Footprint= New Footprint=IDC14-2.0-F
+Added Pin To Net: NetName=SPI2_SCK Pin=J11-3
+Added Pin To Net: NetName=SPI2_NSS Pin=J11-4
+Added Pin To Net: NetName=SPI2_MISO Pin=J11-5
+Added Pin To Net: NetName=SPI2_MOSI Pin=J11-6
+Added Pin To Net: NetName=RST Pin=J11-7
+Added Pin To Net: NetName=GND Pin=R118-1
+Added Pin To Net: NetName=NetP1_3 Pin=R118-2
