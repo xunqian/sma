@@ -142,7 +142,7 @@ typedef struct//结构体
 
 typedef union//共用体、联合体
 {
-	uint8	status[18];
+	uint8	status[20];
 	struct
 	{	
 		//U型传感器不遮挡为1，遮挡为0
@@ -165,6 +165,8 @@ typedef union//共用体、联合体
 		uint8   checkticks16;//备用
 		uint8   checkticks17;//备用
 		uint8   checkticks18;//备用
+		uint8   checkticks19;//按钮开关KEY1
+		uint8   checkticks20;//按钮开关KEY2
 	}SENSORS_STATUS;
 }SENSORS;
 

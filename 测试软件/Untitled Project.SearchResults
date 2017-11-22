@@ -1,0 +1,13 @@
+---- comboBox4 Matches (13 in 1 files) ----
+Form1.Designer.cs (stronger_sma_test\commport):            this.comboBox4 = new System.Windows.Forms.ComboBox();
+Form1.Designer.cs (stronger_sma_test\commport):            this.groupBox5.Controls.Add(this.comboBox4);
+Form1.Designer.cs (stronger_sma_test\commport):            // comboBox4
+Form1.Designer.cs (stronger_sma_test\commport):            this.comboBox4.FormattingEnabled = true;
+Form1.Designer.cs (stronger_sma_test\commport):            this.comboBox4.ItemHeight = 12;
+Form1.Designer.cs (stronger_sma_test\commport):            this.comboBox4.Items.AddRange(new object[] {
+Form1.Designer.cs (stronger_sma_test\commport):            this.comboBox4.Location = new System.Drawing.Point(83, 20);
+Form1.Designer.cs (stronger_sma_test\commport):            this.comboBox4.Name = "comboBox4";
+Form1.Designer.cs (stronger_sma_test\commport):            this.comboBox4.Size = new System.Drawing.Size(100, 20);
+Form1.Designer.cs (stronger_sma_test\commport):            this.comboBox4.TabIndex = 27;
+Form1.Designer.cs (stronger_sma_test\commport):            this.comboBox4.Text = "page8";
+Form1.Designer.cs (stronger_sma_test\commport):        private System.Windows.Forms.ComboBox comboBox4;

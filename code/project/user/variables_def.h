@@ -73,10 +73,10 @@ extern uint16  wdt_resetreg;
  extern uint8  detection; 		 //检测区是否有卡标志
  extern  uint8 antenna; 		 //天线区是否有卡标志
  extern uint16 drop_tic_time ;	 //落票延时,每次打开电磁铁需从定时器延时
+ extern uint16 old_outtime ;	 //老化超时时间
  extern uint16 init_over_time;  //初始化超时
  extern uint16 over_time;	  //通信超时
- extern uint32 rotation_over_time ;  //电机每两步之间的时间间隔
- extern uint32 roll_over_time ;//电机转动超时1s 
+ 
  extern uint32 sole_open_over_time ;//入票口电磁铁打开超时1s 
  extern uint32 sole_openleave_over_time ;//入票口电磁铁打开后离开超时100ms 
  extern uint32 sole_close_over_time ;//入票口电磁铁打开超时1s 
@@ -119,43 +119,44 @@ extern  uint8 cycl_count;
  //回收or退换票卡数量
  extern uint32 box_num[3];
  extern uint8 sum_open_over_time;
-  
+  //部件测试控制量
+ extern uint8 LED_NUM; 
  //通信步骤
-extern uint8 communication_step;
+ extern uint8 communication_step;
  //模式设置
-extern  uint8 model; 
+ extern  uint8 model; 
  //允许/禁止接收设置
-extern  uint8 receive_limits;
+ extern  uint8 receive_limits;
  //通道位置
-extern uint8 current_gallery;
-extern uint8 next_gallery;
+ extern uint8 current_gallery;
+ extern uint8 next_gallery;
  //电机转动方向，速度
-extern uint8 cw;
-extern  uint16 speed;
+ extern uint8 cw;
+ extern  uint16 speed;
  
  //RFID超时延时
-extern  uint16 g_cbWaitRespDly;
-extern  uint16 work_light_cnt;
+ extern  uint16 g_cbWaitRespDly;
+ extern  uint16 work_light_cnt;
  //测试回收性能使用
-extern uint32 time_count;
+ extern uint32 time_count;
  //性能测试时间使能标志
-extern uint8 time_on;
+ extern uint8 time_on;
  //退币口指示灯控制标志
-extern uint8 LED_control_flag;//0:  模块控制1 :上位机控制
+ extern uint8 LED_control_flag;//0:  模块控制1 :上位机控制
  
-extern uint16 OutGPA;
-extern uint16 OutGPB;
-extern uint16 OutGPC;
-extern uint16 OutGPD;
-extern uint16 OutGPE;
+ extern uint16 OutGPA;
+ extern uint16 OutGPB;
+ extern uint16 OutGPC;
+ extern uint16 OutGPD;
+ extern uint16 OutGPE;
 
 //RFID超时延时
-extern uint16 g_cbWaitRespDly ;
+ extern uint16 g_cbWaitRespDly ;
 
-extern uint8 communication_step;
+ extern uint8 communication_step;
 
-extern uint8 Check_LRC(uint8 *ptr, uint8 len) ;
-extern void cmd_act(uint8 cmd);
+ extern uint8 Check_LRC(uint8 *ptr, uint8 len) ;
+ extern void cmd_act(uint8 cmd);
 
 #endif
 

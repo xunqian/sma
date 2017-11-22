@@ -15,10 +15,9 @@ uint16  wdt_resetreg;
  uint8 detection=0; 		 //检测区是否有卡标志
  uint8 antenna = 0; 		 //天线区是否有卡标志
  uint16 drop_tic_time = 0;	 //通道切换超时时间
+ uint16 old_outtime = 0;	 //老化超时时间
  uint16 init_over_time = 0;  //初始化超时
- uint16 over_time = 0;	  //通信超时
- uint32 rotation_over_time = 0;  //电机每两步之间的时间间隔
- uint32 roll_over_time = 0;//电机转动超时1s 
+ uint16 over_time = 0;	  //通信超时 
  uint32 sole_open_over_time = 0;//入票口电磁铁打开超时1s 
  uint32 sole_openleave_over_time = 0;//入票口电磁铁打开后离开超时100ms 
  uint32 sole_close_over_time = 0;//入票口电磁铁打开超时1s 
@@ -42,7 +41,8 @@ uint8 current_gallery;
  //回收or退换票卡数量
  uint32 box_num[3]={0,0,0};
  uint8 sum_open_over_time=0;
- 
+ //部件测试控制量
+ uint8 LED_NUM=0;
  //通信步骤  
  uint8 communication_step = 1;
   //uart0,与ECU通信发送接收用变量定义

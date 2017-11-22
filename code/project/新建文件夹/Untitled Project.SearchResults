@@ -1,4 +1,11 @@
----- WORK_LIGHT_ON Matches (3 in 2 files) ----
-Reg.h (f:\armpoject\sma\code\project\user):#define  WORK_LIGHT_ON     GPIO_WriteBit(OUT1_PORT, OUT1_BIT_NUM, Bit_SET)
-Stm32f10x_it.c (f:\armpoject\sma\code\project\user):            WORK_LIGHT_ON;
-Stm32f10x_it.c (f:\armpoject\sma\code\project\user):            WORK_LIGHT_ON;
+---- check_contri_set Matches (10 in 2 files) ----
+Main.c (f:\armpoject\sma\code\project\user):void check_contri_set(uint8 gallery,uint8 num)
+Main.c (f:\armpoject\sma\code\project\user):				check_contri_set(inbox[1],inbox[2]);
+TIOM.htm (f:\armpoject\sma\code\project\output):<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_contri_set
+TIOM.htm (f:\armpoject\sma\code\project\output):<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_contri_set
+TIOM.htm (f:\armpoject\sma\code\project\output):<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_contri_set
+TIOM.htm (f:\armpoject\sma\code\project\output):<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_contri_set
+TIOM.htm (f:\armpoject\sma\code\project\output):<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_contri_set
+TIOM.htm (f:\armpoject\sma\code\project\output):<P><STRONG><a name="[a0]"></a>check_contri_set</STRONG> (Thumb, 188 bytes, Stack size 16 bytes, main.o(.text))
+TIOM.htm (f:\armpoject\sma\code\project\output):<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = check_contri_set &rArr; KEEP_SOLE_B &rArr; read_sensorstatus &rArr; SOLEC_OFF
+TIOM.htm (f:\armpoject\sma\code\project\output):<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;check_contri_set

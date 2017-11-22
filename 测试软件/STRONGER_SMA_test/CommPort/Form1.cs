@@ -33,10 +33,10 @@ namespace CommPort
             button8.Enabled = false;
             button20.Enabled = false;
             button21.Enabled = false; 
-            button22.Enabled = false;
+           // button22.Enabled = false;
           //  button23.Enabled = false;
             //.Enabled = false;
-          //  button9.Enabled = false;
+            button9.Enabled = false;
             button10.Enabled = false;
             button11.Enabled = false;
             button12.Enabled = false;
@@ -79,10 +79,10 @@ namespace CommPort
                     button8.Enabled = true;
                     button20.Enabled = true;
                     button21.Enabled = true;
-                    button22.Enabled = true;
+                   // button22.Enabled = true;
                    // button23.Enabled = true;
                    // button24.Enabled = true;
-                   // button9.Enabled = true;
+                    button9.Enabled = true;
                     button10.Enabled = true;
                     button11.Enabled = true;
                     button12.Enabled = true;
@@ -119,10 +119,10 @@ namespace CommPort
                 button8.Enabled = false;
                 button20.Enabled = false;
                 button21.Enabled = false;
-                button22.Enabled = false;
+               // button22.Enabled = false;
                // button23.Enabled = false;
                // button24.Enabled = false;
-                //button9.Enabled = false;
+                button9.Enabled = false;
                 button10.Enabled = false;
                 button11.Enabled = false;
                 button12.Enabled = false;
@@ -520,8 +520,9 @@ void analyseSENS_Status(byte ucmodulestuteCode)
                         analyseErrorCode(temp[4]);
                         byte[] buff2 = new byte[15];
                         Array.Copy(temp, 5, buff2, 0, 15);//原数组，开始位，目标数组，开始位，数据长度
-                        string str6 = byteToHexStr(buff2);
-                        textBox1.AppendText("版本号为:\t" + str6 + "\n");
+                        //string str6 = byteToHexStr(buff2);
+                        string str6 = System.Text.Encoding.ASCII.GetString(buff2);
+                        textBox1.AppendText("版本号为:\t" + str6 + "\n");                        
                         break;
                     case 0x8A:
                         textBox1.Invoke(new EventHandler(delegate { textBox1.AppendText("读电子标签 :" + "\n"); }));
@@ -577,7 +578,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             string str1 = byteToHexStr(sendBuff);
 
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("读版本号write：\t" + str1 + "\n");
+            textBox1.AppendText("读版本号：\t" + str1 + "\n");
 
         }
         private void button2_Click(object sender, EventArgs e)
@@ -587,7 +588,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             string str1 = byteToHexStr(sendBuff);
 
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("初始化write：\t" + str1 + "\n");
+            textBox1.AppendText("初始化：\t" + str1 + "\n");
 
         }
 
@@ -597,7 +598,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             //sendBuff[3] = GetLrc(sendBuff, 3);//58
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("回收到A票箱 write:\t" + str1 + "\n");
+            textBox1.AppendText("回收到A票箱 :\t" + str1 + "\n");
             
             
         }
@@ -608,7 +609,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             //sendBuff[3] = GetLrc(sendBuff, 3);//58
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("回收到B票箱 write:\t" + str1 + "\n");
+            textBox1.AppendText("回收到B票箱 :\t" + str1 + "\n");
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -617,7 +618,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("回收到C票箱 write:\t" + str1 + "\n");
+            textBox1.AppendText("回收到C票箱 :\t" + str1 + "\n");
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -634,7 +635,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("获取模块状态 write:\t" + str1 + "\n");
+            textBox1.AppendText("获取模块状态 :\t" + str1 + "\n");
 
             
         }
@@ -671,7 +672,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             sendBuff[7] = GetLrc(buff1,3);
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("读取A票箱电子标签write:\t" + str1 + "\n");
+            textBox1.AppendText("读取A票箱电子标签:\t" + str1 + "\n");
         }
 
         private void button11_Click_1(object sender, EventArgs e)
@@ -706,7 +707,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             sendBuff[7] = GetLrc(buff1, 3);
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("读取B票箱电子标签write:\t" + str1 + "\n");
+            textBox1.AppendText("读取B票箱电子标签:\t" + str1 + "\n");
         }
 
         private void button12_Click_1(object sender, EventArgs e)
@@ -749,7 +750,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
                 sendBuff[23] = GetLrc(buff1, buff1.Length);
                 string str1 = byteToHexStr(sendBuff);
                 serialPort.Write(sendBuff, 0, sendBuff.Length);
-                textBox1.AppendText("设置A票箱电子标签write:\t" + str1 + "\n");
+                textBox1.AppendText("设置A票箱电子标签:\t" + str1 + "\n");
             }
             else
             {
@@ -797,7 +798,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
                 sendBuff[23] = GetLrc(buff1, buff1.Length);
                 string str1 = byteToHexStr(sendBuff);
                 serialPort.Write(sendBuff, 0, sendBuff.Length);
-                textBox1.AppendText("设置B票箱电子标签write:\t" + str1 + "\n");
+                textBox1.AppendText("设置B票箱电子标签:\t" + str1 + "\n");
             }
             else
             {
@@ -807,22 +808,22 @@ void analyseSENS_Status(byte ucmodulestuteCode)
 
        
 
-        private void button9_Click(object sender, EventArgs e)
+      /*  private void button9_Click(object sender, EventArgs e)
         {
             byte[] sendBuff = new byte[8] { 0x10, 0x02, 0x8D, 0x00,0x01,0x10, 0x03, 0x8D };
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("打开退币口指示灯write:\t" + str1 + "\n"); 
+            textBox1.AppendText("打开退币口指示灯:\t" + str1 + "\n"); 
         }
-
+        */
         private void button18_Click(object sender, EventArgs e)
         {
             byte[] sendBuff = new byte[6] { 0x10, 0x02, 0x8E, 0x10, 0x03, 0x8E };
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("关闭退币口指示灯write:\t" + str1 + "\n"); 
+            textBox1.AppendText("关闭退币口指示灯:\t" + str1 + "\n"); 
         }
 
         private void button19_Click(object sender, EventArgs e)
@@ -831,7 +832,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("允许接收TOKENwrite:\t" + str1 + "\n"); 
+            textBox1.AppendText("允许接收TOKEN:\t" + str1 + "\n"); 
         }
 
         private void button20_Click(object sender, EventArgs e)
@@ -840,7 +841,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("禁止接收TOKENwrite:\t" + str1 + "\n"); 
+            textBox1.AppendText("禁止接收TOKEN:\t" + str1 + "\n"); 
         }
 
         private void button21_Click(object sender, EventArgs e)
@@ -849,7 +850,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("模块复位write:\t" + str1 + "\n"); 
+            textBox1.AppendText("模块复位:\t" + str1 + "\n"); 
         }
 
         private void button22_Click(object sender, EventArgs e)
@@ -858,7 +859,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("读取审计累计值write:\t" + str1 + "\n");
+            textBox1.AppendText("读取审计累计值:\t" + str1 + "\n");
         }
 
         private void button23_Click(object sender, EventArgs e)
@@ -867,7 +868,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             //sendBuff[6] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("设置为常开模式write:\t" + str1 + "\n");
+            textBox1.AppendText("设置为常开模式:\t" + str1 + "\n");
         }
         private void button6_Click_1(object sender, EventArgs e)
         {
@@ -875,7 +876,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             //sendBuff[6] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("设置为常关模式write:\t" + str1 + "\n");
+            textBox1.AppendText("设置为常关模式:\t" + str1 + "\n");
         }
         private void button24_Click(object sender, EventArgs e)
         {
@@ -883,7 +884,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             //sendBuff[6] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("读取模块模式write:\t" + str1 + "\n");
+            textBox1.AppendText("读取模块模式:\t" + str1 + "\n");
         }
 
         private void button16_Click(object sender, EventArgs e)
@@ -892,7 +893,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("读取A票箱物理编号write:\t" + str1 + "\n");
+            textBox1.AppendText("读取A票箱物理编号:\t" + str1 + "\n");
         }
 
         private void button25_Click(object sender, EventArgs e)
@@ -901,7 +902,7 @@ void analyseSENS_Status(byte ucmodulestuteCode)
             // sendBuff[3] = GetLrc(sendBuff, 3);//50
             string str1 = byteToHexStr(sendBuff);
             serialPort.Write(sendBuff, 0, sendBuff.Length);
-            textBox1.AppendText("读取B票箱物理编号write:\t" + str1 + "\n");
+            textBox1.AppendText("读取B票箱物理编号:\t" + str1 + "\n");
         }
 
         private void button6_Click_2(object sender, EventArgs e)
@@ -948,7 +949,49 @@ void analyseSENS_Status(byte ucmodulestuteCode)
              
 
             
-        }     
+        }
+
+        private void button9_Click_1(object sender, EventArgs e)
+        {
+            byte[] sendBuff = new byte[7];
+            sendBuff[0] = 0x10;
+            sendBuff[1] = 0x02;
+            sendBuff[2] = 0x8E;
+           
+            switch (comboBox4.Text)
+            {
+                case "SOLE1":
+                    sendBuff[3] = 0x01;
+                    break;
+                case "SOLE2":
+                    sendBuff[3] = 0x02;
+                    break;
+                case "SOLE3":
+                    sendBuff[3] = 0x03;
+                    break;
+                case "SOLE4_A":
+                    sendBuff[3] = 0x04;
+                    break;
+                case "SOLE4_B":
+                    sendBuff[3] = 0x05;
+                    break;
+                default:
+                    sendBuff[3] = 0x01;
+                    break;
+            }           
+                sendBuff[4] = 0x10;
+                sendBuff[5] = 0x03;               
+                sendBuff[6] = (byte)(sendBuff[2] ^ sendBuff[3]);
+                string str1 = byteToHexStr(sendBuff);
+                serialPort.Write(sendBuff, 0, sendBuff.Length);
+                textBox1.AppendText("部件测试:\t" + str1 + "\n");
+        }
+
+                 
+
+        
+
+          
 
        
         

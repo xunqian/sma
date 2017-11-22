@@ -198,7 +198,7 @@ void LED_Display(uint8 number)
 		Write_LED(0x8e);
 		break;
 	default:
-		Write_LED(0xff);
+		Write_LED(0x00);
 		break;
    }			
 }
@@ -545,6 +545,63 @@ uint8 Check_LRC(uint8 *ptr, uint8 len)
 	 }
 		 
  }
+   /*****************************************************************************/
+ /* Function Description:																													   */
+ /*****************************************************************************/
+ //Ä£¿éµç´ÅÌú´ò¿ªº¯Êý
+ //²ÎÊýtime ´ò¿ªµç´ÅÌúÊ±¼ä
+ 
+ /*****************************************************************************/
+ /* Parameters: 																																 */
+ /*****************************************************************************/
+ /* 																																					*/
+ /* 																																					*/
+ /* 																																					*/
+ /*****************************************************************************/
+ /* Return Values:			ÊÇ·ñ³É¹¦																							 */
+ /*****************************************************************************/
+ /* 																																					 */
+ /*   NULL																																			 */
+ /* 																																					 */
+ /*****************************************************************************/
+ void Sole2_Open(uint16 time)
+ {
+	 SOLEB_ON(); 
+	 drop_tic_time = time;
+	 while(drop_tic_time)
+	 {
+		 read_sensorstatus();		  
+	 }
+	 if(drop_tic_time==0)
+	 {
+		 SOLEB_OFF();			 
+	 }
+	 drop_tic_time = time;
+	 while(drop_tic_time)
+	 {
+		 read_sensorstatus();		  
+	 }
+		 
+ }
+  void Sole3_Open(uint16 time)
+ {
+	 SOLEC_ON(); 
+	 drop_tic_time = time;
+	 while(drop_tic_time)
+	 {
+		 read_sensorstatus();		
+	 }
+	 if(drop_tic_time==0)
+	 {
+		 SOLEC_OFF();			 
+	 }
+	 drop_tic_time = time;
+	 while(drop_tic_time)
+	 {
+		 read_sensorstatus();		  
+	 }
+		 
+ }
  /*****************************************************************************/
  /* Function Description:																													   */
  /*****************************************************************************/
@@ -792,6 +849,9 @@ void read_sensorstatus(void)
 	//sens.status[15] = GPIO_ReadInputDataBit(IN4_PORT, IN4_BIT_NUM);
 	//sens.status[16] = GPIO_ReadInputDataBit(IN5_PORT, IN5_BIT_NUM);
 	//sens.status[17] = GPIO_ReadInputDataBit(IN6_PORT, IN6_BIT_NUM);
+	 
+	sens.status[18] = GPIO_ReadInputDataBit(KEY1_PORT, KEY1_BIT_NUM);
+	sens.status[19] = GPIO_ReadInputDataBit(KEY2_PORT, KEY2_BIT_NUM);
 	//Èë¿Ú´ò¿ªÌõ¼þ:1.ÔÊÐí½ÓÊÜ2.Èë¿Ú´«¸ÐÆ÷ÕÚµ²3.ÌìÏßÇøÎÞÆ±
 	if((receive_limits==allow)&&(sens.SENSORS_STATUS.checkticks1 ==0x00)
 		&&(sens.SENSORS_STATUS.checkticks6 !=0x00))
@@ -838,6 +898,17 @@ void read_sensorstatus(void)
 		current_gallery=B_gallery;
 		gallery_LED_OFF;
 	}
+	if((sens_last.SENSORS_STATUS.checkticks19 == 0x01)&&(sens.SENSORS_STATUS.checkticks19 != 0x01))
+	{
+		LED_NUM++;
+		if(LED_NUM>5)
+			LED_NUM=0;
+	}	
+	if((sens_last.SENSORS_STATUS.checkticks20 == 0x01)&&(sens.SENSORS_STATUS.checkticks20 != 0x01))
+	{
+		LED_NUM=0;
+		drop_tic_time =0;
+	}	
 }
 /*****************************************************************************/
 /* Function Description:                                                                                                                      */
@@ -1048,7 +1119,56 @@ void check_modelstatus(RETURN_CODE *re_comm)//-------------------------------´«¸
     read_sensorstatus();
     model_status_anto(re_comm);
 }
- 
+ /*****************************************************************************/
+/* Function Description:                                                                                                                      */
+/*****************************************************************************/
+//¼ì²é°´¼ü×´Ì¬
+//²ÎÊý:null
+/*****************************************************************************/
+/* Parameters:                                                                                                                                  */
+/*****************************************************************************/
+/*                                                                                                                                                     */
+/*                                                                                                                                                     */
+/*                                                                                                                                                     */
+/*****************************************************************************/
+/* Return Values:          ÊÇ·ñ³É¹¦                                                                                             */
+/*****************************************************************************/
+/*                                                                                                                                                      */
+/*   NULL                                                                                                                                           */
+/*                                                                                                                                                      */
+/*****************************************************************************/
+void check_buttonstatus(uint8 num)
+{ 	
+	switch(num)
+		{
+		case 0:	
+			Write_LED(0x00);
+			break;
+		case 1:
+			LED_Display(0x01);
+			SoleA_Open(50);
+			SOLEA_OFF();						
+			break;
+		case 2:
+			LED_Display(0x02);
+			Sole2_Open(50);										
+			break;
+		case 3:
+			LED_Display(0x03);
+			Sole3_Open(50);									
+			break;
+		case 4:
+			LED_Display(0x04);
+			KEEP_SOLE_A();			
+			break;
+		case 5:
+			LED_Display(0x05);
+			KEEP_SOLE_B();			
+			break;
+		default:
+			break;
+		}
+}
 /*****************************************************************************/
 /* Function Description:                                                                                                                      */
 /*****************************************************************************/
@@ -1372,7 +1492,8 @@ uint8 ReadRFID_Serial_Number(uint8 box_no,uint8 *pDATA)
 void check_contri_set(uint8 gallery,uint8 num)
 
 {
-	while(num)
+	old_outtime=500;//Ã¿ÕÅÆ±2sµÄÑÓÊ±
+	while(1)
 	{
 		read_sensorstatus();
 		if(1==gallery)
@@ -1405,22 +1526,30 @@ void check_contri_set(uint8 gallery,uint8 num)
 				SoleC_Open(DROP_T2);
 				if(drop_tic_time!=0)
 					num--;
+				old_outtime=500;//Ã¿ÕÅÆ±10sµÄÑÓÊ±
 			}
 			else if(2==gallery)
 			{					
 				SoleC_Open(DROP_T2);
 				if(drop_tic_time!=0)
 					num--;
+				old_outtime=500;//Ã¿ÕÅÆ±10sµÄÑÓÊ±
 			}
 			else if(3==gallery)
 			{
 				SoleB_Open(DROP_T2);
 				if(drop_tic_time!=0)
 					num--;
+				old_outtime=500;//Ã¿ÕÅÆ±10sµÄÑÓÊ±
 			}
 			if(drop_tic_time==0)
-				antenna=INEXISTENCE;					
+				antenna=INEXISTENCE;
+			
 	   	}
+		if(num==0)
+			break;
+		if(old_outtime==0)
+			break;
 		
 	}
 }
@@ -1765,6 +1894,26 @@ void check_command(void)//¼ì²éÃüÁî
                 cmd_reseive(&re_code);
                 normal_start = 1;
                 break;
+            }
+			  case 0x8E:          //²¿¼þ¼ì²â
+            {
+                re_code.MESSAGE.act_code = inbox[0];
+				re_code.MESSAGE.err_code = com_ok;
+				if(inbox[1]<6)
+				{
+					check_buttonstatus(inbox[1]);
+					Write_LED(0x00);//Çå³ý°Ë¶ÎÂëÏÔÊ¾				
+	               	re_code.MESSAGE.result = 's';
+				}
+				else
+				{					
+					re_code.MESSAGE.err_code = invalid_parameter;
+					re_code.MESSAGE.result = 'e';
+				}
+                re_code.MESSAGE.len = 3;
+                cmd_reseive(&re_code);
+                normal_start = 1;
+                break;
             }		
 			/*  case 0x8F:          //ÉèÖÃÄ£¿éÄ£Ê½:¿ØÖÆÄ£Ê½
             {
@@ -1974,6 +2123,7 @@ int main()
 	{		
 		read_sensorstatus();		
 		check_command();
+		check_buttonstatus(LED_NUM);
 		//USART_SendData(USART1,WXDLE);
 		//while(USART_GetFlagStatus(USART1,USART_FLAG_TXE)==Bit_RESET);
 	}

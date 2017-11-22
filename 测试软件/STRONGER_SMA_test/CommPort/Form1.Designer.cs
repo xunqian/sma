@@ -36,7 +36,6 @@
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button20 = new System.Windows.Forms.Button();
-            this.button22 = new System.Windows.Forms.Button();
             this.button19 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -49,6 +48,10 @@
             this.button15 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button7 = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.button9 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button25 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
@@ -68,10 +71,13 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.button8 = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -123,7 +129,6 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.button20);
-            this.groupBox2.Controls.Add(this.button22);
             this.groupBox2.Controls.Add(this.button19);
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.button4);
@@ -132,36 +137,26 @@
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Location = new System.Drawing.Point(12, 69);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(275, 218);
+            this.groupBox2.Size = new System.Drawing.Size(275, 189);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "通道操作";
             // 
             // button20
             // 
-            this.button20.Location = new System.Drawing.Point(139, 168);
+            this.button20.Location = new System.Drawing.Point(6, 146);
             this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(131, 45);
+            this.button20.Size = new System.Drawing.Size(131, 36);
             this.button20.TabIndex = 12;
             this.button20.Text = "禁止接收TOKEN";
             this.button20.UseVisualStyleBackColor = false;
             this.button20.Click += new System.EventHandler(this.button20_Click);
             // 
-            // button22
-            // 
-            this.button22.Location = new System.Drawing.Point(6, 120);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(131, 42);
-            this.button22.TabIndex = 10;
-            this.button22.Text = "读取审计累计值";
-            this.button22.UseVisualStyleBackColor = false;
-            this.button22.Click += new System.EventHandler(this.button22_Click);
-            // 
             // button19
             // 
-            this.button19.Location = new System.Drawing.Point(6, 168);
+            this.button19.Location = new System.Drawing.Point(6, 104);
             this.button19.Name = "button19";
-            this.button19.Size = new System.Drawing.Size(131, 45);
+            this.button19.Size = new System.Drawing.Size(131, 36);
             this.button19.TabIndex = 11;
             this.button19.Text = "允许接收TOKEN";
             this.button19.UseVisualStyleBackColor = false;
@@ -169,20 +164,20 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(138, 120);
+            this.button5.Location = new System.Drawing.Point(138, 104);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(131, 42);
+            this.button5.Size = new System.Drawing.Size(131, 36);
             this.button5.TabIndex = 3;
-            this.button5.Text = "回收到C票";
+            this.button5.Text = "回收到C票箱";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
             this.button4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button4.Location = new System.Drawing.Point(138, 69);
+            this.button4.Location = new System.Drawing.Point(138, 61);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(131, 45);
+            this.button4.Size = new System.Drawing.Size(131, 36);
             this.button4.TabIndex = 2;
             this.button4.Text = "回收到B票箱";
             this.button4.UseVisualStyleBackColor = true;
@@ -190,9 +185,9 @@
             // 
             // button17
             // 
-            this.button17.Location = new System.Drawing.Point(6, 69);
+            this.button17.Location = new System.Drawing.Point(7, 62);
             this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(131, 45);
+            this.button17.Size = new System.Drawing.Size(131, 36);
             this.button17.TabIndex = 8;
             this.button17.Text = "获取模块状态";
             this.button17.UseVisualStyleBackColor = false;
@@ -202,7 +197,7 @@
             // 
             this.button3.Location = new System.Drawing.Point(138, 20);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(131, 43);
+            this.button3.Size = new System.Drawing.Size(131, 36);
             this.button3.TabIndex = 1;
             this.button3.Text = "回收到A票箱";
             this.button3.UseVisualStyleBackColor = true;
@@ -214,7 +209,7 @@
             this.button2.ForeColor = System.Drawing.Color.Black;
             this.button2.Location = new System.Drawing.Point(6, 20);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(131, 44);
+            this.button2.Size = new System.Drawing.Size(131, 36);
             this.button2.TabIndex = 0;
             this.button2.Text = "初始化模块";
             this.button2.UseVisualStyleBackColor = true;
@@ -229,7 +224,7 @@
             this.groupBox3.Controls.Add(this.button7);
             this.groupBox3.Location = new System.Drawing.Point(287, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(403, 502);
+            this.groupBox3.Size = new System.Drawing.Size(403, 532);
             this.groupBox3.TabIndex = 3;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "接收数据";
@@ -270,7 +265,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(394, 425);
+            this.textBox1.Size = new System.Drawing.Size(394, 464);
             this.textBox1.TabIndex = 1;
             // 
             // button7
@@ -282,6 +277,53 @@
             this.button7.Text = "清空接收数据";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.button9);
+            this.groupBox5.Controls.Add(this.label7);
+            this.groupBox5.Controls.Add(this.comboBox4);
+            this.groupBox5.Location = new System.Drawing.Point(11, 491);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(275, 53);
+            this.groupBox5.TabIndex = 41;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "部件测试";
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(200, 15);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(63, 29);
+            this.button9.TabIndex = 39;
+            this.button9.Text = "部件测试";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click_1);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 23);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(65, 12);
+            this.label7.TabIndex = 34;
+            this.label7.Text = "选择地址：";
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.ItemHeight = 12;
+            this.comboBox4.Items.AddRange(new object[] {
+            "SOLE1",
+            "SOLE2",
+            "SOLE3",
+            "SOLE4_A",
+            "SOLE4_B"});
+            this.comboBox4.Location = new System.Drawing.Point(83, 20);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(100, 20);
+            this.comboBox4.TabIndex = 27;
+            this.comboBox4.Text = "SOLE1";
             // 
             // groupBox4
             // 
@@ -297,7 +339,7 @@
             this.groupBox4.Controls.Add(this.comboBox1);
             this.groupBox4.Controls.Add(this.button11);
             this.groupBox4.Controls.Add(this.button10);
-            this.groupBox4.Location = new System.Drawing.Point(12, 293);
+            this.groupBox4.Location = new System.Drawing.Point(12, 264);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(275, 221);
             this.groupBox4.TabIndex = 2;
@@ -430,13 +472,11 @@
             // 
             // radioButton1
             // 
-            this.radioButton1.AutoCheck = false;
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(50, 537);
+            this.radioButton1.Location = new System.Drawing.Point(15, 29);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(53, 20);
             this.radioButton1.TabIndex = 11;
-            this.radioButton1.TabStop = true;
             this.radioButton1.Text = "A票箱";
             this.radioButton1.UseCompatibleTextRendering = true;
             this.radioButton1.UseVisualStyleBackColor = true;
@@ -445,11 +485,10 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(119, 537);
+            this.radioButton2.Location = new System.Drawing.Point(79, 32);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(53, 16);
             this.radioButton2.TabIndex = 12;
-            this.radioButton2.TabStop = true;
             this.radioButton2.Text = "B票箱";
             this.radioButton2.UseVisualStyleBackColor = true;
             this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
@@ -458,7 +497,7 @@
             // 
             this.radioButton3.AutoSize = true;
             this.radioButton3.Checked = true;
-            this.radioButton3.Location = new System.Drawing.Point(191, 537);
+            this.radioButton3.Location = new System.Drawing.Point(145, 31);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(59, 16);
             this.radioButton3.TabIndex = 13;
@@ -470,7 +509,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(256, 537);
+            this.label4.Location = new System.Drawing.Point(210, 33);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(113, 12);
             this.label4.TabIndex = 39;
@@ -478,15 +517,15 @@
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(375, 534);
+            this.textBox4.Location = new System.Drawing.Point(329, 28);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(123, 21);
+            this.textBox4.Size = new System.Drawing.Size(58, 21);
             this.textBox4.TabIndex = 40;
             this.textBox4.Text = "2";
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(519, 526);
+            this.button8.Location = new System.Drawing.Point(417, 18);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(131, 35);
             this.button8.TabIndex = 39;
@@ -494,18 +533,29 @@
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.radioButton1);
+            this.groupBox6.Controls.Add(this.button8);
+            this.groupBox6.Controls.Add(this.radioButton2);
+            this.groupBox6.Controls.Add(this.textBox4);
+            this.groupBox6.Controls.Add(this.radioButton3);
+            this.groupBox6.Controls.Add(this.label4);
+            this.groupBox6.Location = new System.Drawing.Point(12, 550);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(678, 63);
+            this.groupBox6.TabIndex = 41;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "老化测试";
+            // 
             // form1
             // 
             this.AccessibleName = "";
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 573);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.radioButton3);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
+            this.ClientSize = new System.Drawing.Size(700, 619);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -520,10 +570,13 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -558,7 +611,6 @@
         private System.Windows.Forms.Button button19;
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Button button21;
-        private System.Windows.Forms.Button button22;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.Button button25;
         private System.Windows.Forms.Button button6;
@@ -568,6 +620,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button button9;
     }
 }
 

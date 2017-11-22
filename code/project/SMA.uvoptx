@@ -143,6 +143,10 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
+          <Key>DLGUARM</Key>
+        </SetRegEntry>
+        <SetRegEntry>
+          <Number>0</Number>
           <Key>ARMRTXEVENTFLAGS</Key>
           <Name>-L70 -Z18 -C0 -M0 -T1</Name>
         </SetRegEntry>
@@ -171,25 +175,25 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>80</LineNumber>
+          <LineNumber>1552</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134225514</Address>
+          <Address>134222772</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\user\stm32f10x_it.c</Filename>
+          <Filename>.\user\main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>1670</LineNumber>
+          <LineNumber>1550</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134223344</Address>
+          <Address>134222764</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -203,9 +207,9 @@
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>1180</LineNumber>
+          <LineNumber>1543</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134221426</Address>
+          <Address>134222744</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -219,9 +223,9 @@
         <Bp>
           <Number>3</Number>
           <Type>0</Type>
-          <LineNumber>1166</LineNumber>
+          <LineNumber>1536</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134221312</Address>
+          <Address>134222716</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -235,89 +239,9 @@
         <Bp>
           <Number>4</Number>
           <Type>0</Type>
-          <LineNumber>987</LineNumber>
+          <LineNumber>1528</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134220886</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\user\main.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>5</Number>
-          <Type>0</Type>
-          <LineNumber>979</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134220854</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\user\main.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>6</Number>
-          <Type>0</Type>
-          <LineNumber>969</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134220808</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\user\main.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>7</Number>
-          <Type>0</Type>
-          <LineNumber>959</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134220762</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\user\main.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>8</Number>
-          <Type>0</Type>
-          <LineNumber>949</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134220716</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\user\main.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>9</Number>
-          <Type>0</Type>
-          <LineNumber>938</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134220666</Address>
+          <Address>134222684</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -339,6 +263,16 @@
           <count>1</count>
           <WinNumber>1</WinNumber>
           <ItemText>m</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>num</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>old_outtime</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

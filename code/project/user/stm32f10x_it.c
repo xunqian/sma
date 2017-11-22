@@ -352,7 +352,9 @@ void TIM3_IRQHandler()	 //定时器3中断函数20ms
 	{			
 		SOLEA_OFF();
 		detection=INEXISTENCE;//清除检测区标志		
-	}	
+	}
+	if(old_outtime != 0)//老化超时时间
+        old_outtime--;
 	if(sole_close_over_time != 0)
         sole_close_over_time--;
 	if(sole2_open_over_time != 0)
